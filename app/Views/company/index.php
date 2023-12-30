@@ -1,3 +1,6 @@
+<!-- <script src="<?php //echo base_url("public/assets/js/masks.js"); 
+                    ?>"></script> -->
+
 <div class="container-fluid">
 
     <div class="header">
@@ -16,33 +19,15 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Profile Settings</h5>
+                    <h5 class="card-title mb-0">Empresas</h5>
                 </div>
 
                 <div class="list-group list-group-flush" role="tablist">
                     <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#account" role="tab">
-                        Contas
+                        Cadastrar
                     </a>
                     <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#password" role="tab">
-                        Senha
-                    </a>
-                    <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#" role="tab">
-                        Privacy and safety
-                    </a>
-                    <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#" role="tab">
-                        Email notifications
-                    </a>
-                    <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#" role="tab">
-                        Web notifications
-                    </a>
-                    <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#" role="tab">
-                        Widgets
-                    </a>
-                    <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#" role="tab">
-                        Your data
-                    </a>
-                    <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#" role="tab">
-                        Delete account
+                        Lista de Empresas
                     </a>
                 </div>
             </div>
@@ -55,83 +40,104 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-actions float-end">
-                                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalCreateUser"><i class="fa-solid fa-plus"></i> Novo Usuário</button>
                                 <a href="<?php echo base_url('/settings') ?>" class="me-1">
                                     <i class="align-middle" data-feather="refresh-cw"></i>
                                 </a>
                             </div>
-                            <h5 class="card-title">Usuários</h5>
+                            <h5 class="card-title mb-0">Cadastrar Nova Empresa</h5>
                         </div>
                         <div class="card-body">
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Username</th>
-                                                <th>E-mail</th>
-                                                <th class="d-none d-md-table-cell">Último Acesso</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <!-- <tbody>
-                                            <?php //foreach ($user as $item) : ?>
-                                                <tr>
-                                                    <td><?php //echo $item["username"]; ?></td>
-                                                    <td><?php //echo $item["secret"]; ?></td>
-                                                    <td class="d-none d-md-table-cell"><?php //echo $item["last_active"] ?></td>
-                                                    <td class="table-action">
-                                                        <button class="btn btn-warning" value="<?php //echo $item["id"]; ?>" onclick="edit(this)"><i class="align-middle fas fa-fw fa-pen"></i></button>
-                                                        <button class="btn btn-danger"><i class="align-middle fas fa-fw fa-trash"></i></button>
-                                                    </td>
-                                                </tr>
-                                            <?php // ?>
-
-                                        </tbody> -->
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-actions float-end">
-                                <a href="<?php echo base_url('/settings') ?>" class="me-1">
-                                    <i class="align-middle" data-feather="refresh-cw"></i>
-                                </a>
-                            </div>
-                            <h5 class="card-title mb-0">Private info</h5>
-                        </div>
-                        <div class="card-body">
-                            <form action="<?php echo base_url("/edit"); ?>" method="POST">
+                            <form id="formCompany" action="<?php echo base_url("company/save"); ?>" method="POST">
                                 <div class="row">
-                                    <input type="hidden" name="id" id="inputId">
-                                    <div class="mb-3 col-md-6">
-                                        <label for="inputFirstName">Nome Completo</label>
-                                        <input type="text" class="form-control" name="nome" id="inputNome" placeholder="Digite seu Nome Completo" disabled>
+                                    <div class="mb-3 col-md-4">
+                                        <label for="inputFirstName">Nome Empresarial</label>
+                                        <input type="text" class="form-control" name="nomeEmpresarial" id="inputNomeEmpresarial" placeholder="Digite o Nome Empresarial" required>
+                                    </div>
+                                    <div class="mb-3 col-md-4">
+                                        <label for="inputLastName">Nome Fantasia</label>
+                                        <input type="text" class="form-control" name="nomeFantasia" id="inputNomeFantasia" placeholder="Digite o Nome Fantasia" required>
+                                    </div>
+                                    <div class="mb-3 col-md-4">
+                                        <label for="inputLastName">Data de Abertura</label>
+                                        <input type="date" class="form-control" name="dataAbertura" id="inputDataAbertura" placeholder="Digite a Data de Abertura" required>
+                                    </div>
+                                    <div class="mb-3 col-md-3">
+                                        <label for="inputEmail4">Número de Inscrição (CNPJ)</label>
+                                        <input type="text" class="form-control cnpj" name="numeroInscricao" id="inputNumeroInscricao" placeholder="Digite o CNPJ" required>
+                                    </div>
+                                    <div class="mb-3 col-md-2">
+                                        <label for="inputAddress">Porte</label>
+                                        <input type="text" class="form-control" name="porte" id="inputPorte" placeholder="Digite o Porte" required>
+                                    </div>
+                                    <div class="mb-3 col-md-3">
+                                        <label for="inputAddress2">Situação Cadastral</label>
+                                        <select class="form-select" name="situacaoCadastral" id="" required>
+                                            <option disabled selected>Selecione</option>
+                                            <option value="A">ATIVA</option>
+                                            <option value="I">INATIVA </option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-md-4">
+                                        <label for="inputAddress2">Data da Situação Cadastral</label>
+                                        <input type="date" class="form-control" name="dataSituacaoCadastral" id="inputDataSituacaoCadastral" placeholder="Digite a Data da Situação Cadastral" required>
+                                    </div>
+                                    <div class="mb-3 col-md-4">
+                                        <label for="inputAddress2">Código de Atividade</label>
+                                        <input type="text" class="form-control" name="codigoAtividade" id="inputCodigoAtividade" placeholder="Digite o Código de Atividade" required>
+                                    </div>
+                                    <div class="mb-3 col-md-8">
+                                        <label for="inputAddress2">Descrição de Atividade</label>
+                                        <input type="text" class="form-control" name="descricaoAtividade" id="inputDescricaoAtividade" placeholder="Digite a Descrição de Atividade">
+                                    </div>
+                                    <div class="mb-3 col-md-4">
+                                        <label for="inputAddress2">Código de Natureza Juridíca</label>
+                                        <input type="text" class="form-control" name="codigoNaturezaJuridica" id="inputCodigoNaturezaJuridica" placeholder="Digite o Código de Natureza Jurídica" required>
+                                    </div>
+                                    <div class="mb-3 col-md-8">
+                                        <label for="inputAddress2">Descrição de Natureza Juridíca</label>
+                                        <input type="text" class="form-control" name="descricaoNaturezaJuridica" id="codigoAtividade" placeholder="Digite a Descrição de Natureza Juridíca">
+                                    </div>
+                                    <div class="mb-3 col-md-3">
+                                        <label for="inputAddress2">CEP</label>
+                                        <input type="text" class="form-control cep" name="cep" id="inputCep" onkeyup="consultarCEP(this.value)" placeholder="Digite o CEP" required>
                                     </div>
                                     <div class="mb-3 col-md-6">
-                                        <label for="inputLastName">E-mail</label>
-                                        <input type="email" class="form-control" name="email" id="inputEmail" placeholder="Digite seu E-mail" disabled>
+                                        <label for="inputAddress2">Endereço</label>
+                                        <input type="text" class="form-control cep" name="endereco" id="inputEndereco" placeholder="Digite o Endereço" required>
+                                    </div>
+                                    <div class="mb-3 col-md-3">
+                                        <label for="inputAddress2">Bairro</label>
+                                        <input type="text" class="form-control" name="bairro" id="inputBairro" placeholder="Digite o Bairro" required>
+                                    </div>
+                                    <div class="mb-3 col-md-2">
+                                        <label for="inputAddress2">Número</label>
+                                        <input type="text" class="form-control" name="numero" id="inputNumero" placeholder="Digite o Número" required>
+                                    </div>
+                                    <div class="mb-3 col-md-3">
+                                        <label for="inputAddress2">Município</label>
+                                        <input type="text" class="form-control" name="municipio" id="inputMunicipio" placeholder="Digite o Município" required>
+                                    </div>
+                                    <div class="mb-3 col-md-2">
+                                        <label for="inputAddress2">UF</label>
+                                        <input type="text" class="form-control" name="uf" id="inputUf" placeholder="Digite o UF" required>
+                                    </div>
+                                    <div class="mb-3 col-md-5">
+                                        <label for="inputAddress2">Complemento</label>
+                                        <input type="text" class="form-control" name="complemento" id="inputComplemento" placeholder="Digite o Complemento">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label for="inputAddress2">E-mail</label>
+                                        <input type="email" class="form-control" name="email" id="inputEmail" placeholder="Digite o E-mail" required>
                                     </div>
                                     <div class="mb-3 col-md-6">
-                                        <label for="inputEmail4">CPF</label>
-                                        <input type="text" class="form-control" name="cpf" id="inputCpf" placeholder="Digite seu CPF" disabled>
+                                        <label for="inputAddress2">Telefone</label>
+                                        <input type="text" class="form-control telefone" name="telefone" id="inputTelefone" placeholder="Digite o Telefone" required>
                                     </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="inputAddress">RG</label>
-                                        <input type="text" class="form-control" name="rg" id="inputRg" placeholder="Digite seu RG" disabled>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="inputAddress2">Tipo de Acesso</label>
-                                        <input type="text" class="form-control" id="tipoAcesso" placeholder="Selecione o Tipo de Acesso" disabled>
-                                    </div>
-
                                 </div>
 
-                                <button type="submit" id="buttonSave" class="btn btn-primary" disabled>Salvar as Alterações</button>
+                                <button type="submit" id="buttonSave" class="btn btn-primary">Salvar as Alterações</button>
                             </form>
 
                         </div>
@@ -144,22 +150,27 @@
                         <div class="card-body">
                             <h5 class="card-title">Redefinir Senha</h5>
 
-                            <form>
-                                <div class="mb-3">
-                                    <label for="inputPasswordCurrent">Senha Atual</label>
-                                    <input type="password" class="form-control" id="inputPasswordCurrent">
-                                    <small><a href="#">Esqueceu a Senha?</a></small>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="inputPasswordNew">Nova Senha</label>
-                                    <input type="password" class="form-control" id="inputPasswordNew">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="inputPasswordNew2">Repita a Nova Senha</label>
-                                    <input type="password" class="form-control" id="inputPasswordNew2">
-                                </div>
-                                <button type="submit" class="btn btn-danger" disabled>Redefinir Senha</button>
-                            </form>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CNPJ</th>
+                                        <th class="d-none d-md-table-cell">Data Abertura</th>
+                                        <th>Nome Fantasia</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($empresa as $item) : ?>
+                                        <tr>
+                                            <td><?php echo $item["id"]; ?></td>
+                                            <td class="cnpj"><?php echo $item["numero_inscricao"]; ?></td>
+                                            <td><?php echo $item["data_abertura"] ?></td>
+                                            <td><?php echo $item["nome_fantasia"] ?></td>
+                                        </tr>
+                                    <?php endforeach ?>
+
+                                </tbody>
+                            </table>
 
                         </div>
                     </div>
@@ -168,5 +179,56 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        // Remover máscaras antes de enviar o formulário
+        $('#formCompany').submit(function() {
+            // Remover a máscara do CNPJ
+            $('#inputNumeroInscricao').unmask();
+            // Remover a máscara do CEP
+            $('#inputCep').unmask();
+            // Remover a máscara do telefone
+            $('#inputTelefone').unmask();
+            // Adicione outras remoções de máscaras conforme necessário
+
+            // Continuar com o envio do formulário
+        });
+    });
+
+    function consultarCEP(data) {
+
+        let cep = data.replace(/-/g, '');
+
+        console.log(cep);
+        // Limpa os campos de resultado
+        document.getElementById('inputEndereco').value = '';
+        document.getElementById('inputBairro').value = '';
+        document.getElementById('inputMunicipio').value = '';
+        document.getElementById('inputUf').value = '';
+
+        // Faz a requisição à API ViaCEP apenas se o CEP tem o tamanho adequado
+        if (cep.length === 8) {
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.erro) {
+                        console.log(data);
+                        // Preenche os campos com os dados do CEP
+                        document.getElementById('inputEndereco').value = data.logradouro;
+                        document.getElementById('inputBairro').value = data.bairro;
+                        document.getElementById('inputMunicipio').value = data.localidade;
+                        document.getElementById('inputUf').value = data.uf;
+                    } else {
+                        alert('CEP não encontrado.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro na consulta de CEP:', error);
+                });
+        }
+    }
+</script>
+<script src="<?php echo base_url("public/assets/js/masks.js"); ?>"></script>
 <?= $this->include('Views/settings/functionJs.php') ?>
 <?= $this->include('Views/settings/modal/create_users_model') ?>

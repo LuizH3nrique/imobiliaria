@@ -19,6 +19,7 @@ $routes->post('/create', 'UsuarioController::create', ['filter' => 'session']);
 
 // company
 $routes->get('/company', 'CompanyController::index', ['filter' => 'session']);
+$routes->post('/company/save', 'CompanyController::save', ['filter' => 'session']);
 
 service('auth')->routes($routes);
 
