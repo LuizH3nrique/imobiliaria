@@ -22,10 +22,10 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-          server: ${{ secrets.ftp_host }}
-          port: ${{ secrets.ftp_port }}
-          username: ${{ secrets.ftp_user }}
-          password: ${{ secrets.ftp_password }}
+          server: ftp://154.56.48.224
+          port: 21
+          username: u139152663
+          password: h86e-cLyBav4+f$
           server-dir: /public_html/imobi/
           exclude: |
             **/.github*
