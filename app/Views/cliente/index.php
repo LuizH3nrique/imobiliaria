@@ -58,9 +58,9 @@
                 <div class="tab-pane fade" id="password" role="tabpanel">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Lista de Prédios Cadastrados</h5>
+                            <h5 class="card-title">Lista de Clientes Cadastrados</h5>
 
-                            <table class="table">
+                            <table class="table display" id="tabelaResponsivaDataTable" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>

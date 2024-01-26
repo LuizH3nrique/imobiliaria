@@ -62,7 +62,7 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">Lista de Prédios Cadastrados</h5>
 
-                                                <table class="table">
+                                                <table class="table" id="tabelaResponsivaDataTable">
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
