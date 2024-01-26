@@ -33,7 +33,7 @@
                                         <td class="d-none d-md-table-cell"><?php echo $item["last_active"] ?></td>
                                         <td class="table-action">
                                             <button class="btn btn-warning" value="<?php echo $item["id"]; ?>" onclick="edit(this)"><i class="align-middle fas fa-fw fa-pen"></i></button>
-                                            <button class="btn btn-danger"><i class="align-middle fas fa-fw fa-trash"></i></button>
+                                            <a href="<?php echo base_url('settings/delete?id=' . $item['id']) ?>" class="btn btn-danger"><i class="align-middle fas fa-fw fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>

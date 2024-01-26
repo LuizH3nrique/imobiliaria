@@ -14,6 +14,7 @@ $routes->get('/teste', 'Teste::index', ['filter' => 'session']);
 // users
 //$routes->get('/settings', 'SettingController::index', ['filter' => 'session']);
 $routes->get('/settings', 'SettingController::index', ['filter' => 'session']);
+$routes->get('/settings/delete', 'SettingController::delete', ['filter' => 'session']);
 
 $routes->get('/list', 'UsuarioController::list', ['filter' => 'session']);
 $routes->post('/edit', 'UsuarioController::edit', ['filter' => 'session']);

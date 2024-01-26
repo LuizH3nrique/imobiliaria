@@ -50,7 +50,7 @@ class UsuarioModel extends Model
         if (!empty($id)) {
             return $this->where('users.id', $id)->first();
         } else {
-            return $this->findAll();
+            return $this->where('deleted_at', null)->findAll();
         }
     }
 }
