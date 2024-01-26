@@ -6,13 +6,14 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
 
 	<title></title>
 
-	<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="<?php echo base_url('public/themes/dist/js/app.js') ?>"></script>
 	<link href="<?php echo base_url('public/themes/dist/css/modern.css') ?>" rel="stylesheet">
 	<!-- Seus estilos, scripts, meta tags, etc. aqui -->
@@ -24,6 +25,47 @@
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+	/* Aplicar a fonte a todos os elementos <h> */
+	h1,
+	h2 {
+		font-family: 'Montserrat', sans-serif;
+		font-weight: bold;
+		font-size: 20px;
+	}
+
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: 'Montserrat', sans-serif;
+		font-size: 14px;
+	}
+
+	.card-title {
+		font-family: 'Montserrat', sans-serif;
+		font-weight: bold;
+	}
+
+	label {
+		font-family: 'Montserrat', sans-serif;
+		font-size: 13px;
+		font-weight: bold;
+	}
+
+	/* Aplicar a fonte a todos os parágrafos <p> */
+	p {
+		font-family: 'Montserrat', sans-serif;
+		font-size: 14px;
+	}
+
+	/* Aplicar a fonte a todos os outros textos */
+	body {
+		font-family: 'Montserrat', sans-serif;
+	}
+</style>
 
 <body>
 
@@ -56,9 +98,11 @@
 							<i class="align-middle me-2 fas fa-fw fa-home"></i> <span class="align-middle">Cadastro</span>
 						</a>
 						<ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
-							<li class="sidebar-item active"><a class='sidebar-link' href='<?php echo base_url('company') ?>'><i class="align-middle me-2 fas fa-solid fa-building"></i> Empresa</a></li>
-							<li class="sidebar-item"><a class='sidebar-link' href='/dashboard-analytics'>Analytics</a></li>
-							<li class="sidebar-item"><a class='sidebar-link' href='/dashboard-e-commerce'>E-commerce</a></li>
+							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('company') ?>'><i class="align-middle me-2 fas fa-solid fa-shop"></i> Empresa</a></li>
+							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('predio') ?>'><i class="align-middle me-2 fas fa-solid fa-building"></i> Prédios</a></li>
+							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('sala') ?>'><i class="align-middle me-2 fas fa-solid fa-kaaba"></i> Salas</a></li>
+							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('cliente') ?>'><i class="align-middle me-2 fas fa-solid fa-people-group"></i></i> Clientes</a></li>
+							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('contrato') ?>'><i class="align-middle me-2 fas fa-solid fa-file-contract"></i> Contratos</a></li>
 						</ul>
 					</li>
 					<!-- <li class="sidebar-item">
@@ -186,59 +230,11 @@
 									</div>
 								</div>
 								<div class="list-group">
-									<a href="#" class="list-group-item">
-										<div class="row g-0 align-items-center">
-											<div class="col-2">
-												<img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle" alt="Michelle Bilodeau">
-											</div>
-											<div class="col-10 ps-2">
-												<div class="text-dark">Michelle Bilodeau</div>
-												<div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu tortor.</div>
-												<div class="text-muted small mt-1">5m ago</div>
-											</div>
-										</div>
-									</a>
-									<a href="#" class="list-group-item">
-										<div class="row g-0 align-items-center">
-											<div class="col-2">
-												<img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle" alt="Kathie Burton">
-											</div>
-											<div class="col-10 ps-2">
-												<div class="text-dark">Kathie Burton</div>
-												<div class="text-muted small mt-1">Pellentesque auctor neque nec urna.</div>
-												<div class="text-muted small mt-1">30m ago</div>
-											</div>
-										</div>
-									</a>
-									<a href="#" class="list-group-item">
-										<div class="row g-0 align-items-center">
-											<div class="col-2">
-												<img src="img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle" alt="Alexander Groves">
-											</div>
-											<div class="col-10 ps-2">
-												<div class="text-dark">Alexander Groves</div>
-												<div class="text-muted small mt-1">Curabitur ligula sapien euismod vitae.</div>
-												<div class="text-muted small mt-1">2h ago</div>
-											</div>
-										</div>
-									</a>
-									<a href="#" class="list-group-item">
-										<div class="row g-0 align-items-center">
-											<div class="col-2">
-												<img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle" alt="Daisy Seger">
-											</div>
-											<div class="col-10 ps-2">
-												<div class="text-dark">Daisy Seger</div>
-												<div class="text-muted small mt-1">Aenean tellus metus, bibendum sed, posuere ac, mattis non.</div>
-												<div class="text-muted small mt-1">5h ago</div>
-											</div>
-										</div>
-									</a>
+
+									<div class="dropdown-menu-footer">
+										<a href="#" class="text-muted">Show all messages</a>
+									</div>
 								</div>
-								<div class="dropdown-menu-footer">
-									<a href="#" class="text-muted">Show all messages</a>
-								</div>
-							</div>
 						</li>
 						<li class="nav-item dropdown ms-lg-2">
 							<a class="nav-link dropdown-toggle position-relative" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
@@ -360,6 +356,7 @@
 			</symbol>
 		</defs>
 	</svg>
+	
 	<script>
 		$(document).ready(function() {
 			toastr.options = {

@@ -24,8 +24,8 @@ class LoginController extends BaseController
             ],
             [
                 'email' => [
-                'required' => 'O e-mail é obrigatório!',
-                'valid_email' => 'O e-mail é inválido!',
+                    'required' => 'O e-mail é obrigatório!',
+                    'valid_email' => 'O e-mail é inválido!',
                 ],
             ]
         );
@@ -34,24 +34,5 @@ class LoginController extends BaseController
             return redirect()->route('/')->with('errors', $this->validator->getErrors());
         } else {
         }
-
-        // $pwd = strval($this->request->getPost("senha"));
-        // $email = $this->request->getPost("email");
-
-        // $usuarioModel = new UsuarioModel();
-
-        // if ($senhaHash = $usuarioModel->verifyPassword($email)) {
-        //     if (password_verify($pwd, $senhaHash["senhaHash"])) {
-        //         echo "Password matches.";
-        //     } else {
-        //         echo "Password incorrect.";
-        //     }
-        // } else {
-        //     echo "User not found.";
-        // }
-    }
-
-    public function validation()
-    {
     }
 }

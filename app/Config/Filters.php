@@ -48,11 +48,14 @@ class Filters extends BaseConfig
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
+            'permission'
+            
         ],
         'after' => [
             'toolbar',
             // 'honeypot',
             // 'secureheaders',
+            'permission'
         ],
     ];
 
@@ -81,6 +84,9 @@ class Filters extends BaseConfig
             'before' => [
                 'login*', 'register', 'auth/*'
             ]
-        ]
+        ],
+
+        // 'permission' => ['before' => ['your/protected/route']],
+
     ];
 }

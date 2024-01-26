@@ -30,7 +30,4 @@ jobs:
           exclude: |
             **/.github*
             **/.github*/**
-            **/uploads/**
-            # **/system/**
-            # .env
-            fileToExclude.txt
+            .env

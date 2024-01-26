@@ -7,12 +7,14 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 // Login 
-$routes->get('/', 'LoginController::index');
+$routes->get('/', 'LoginController::index', ['filter' => 'session']);
 $routes->get('/teste', 'Teste::index', ['filter' => 'session']);
 
 
 // users
+//$routes->get('/settings', 'SettingController::index', ['filter' => 'session']);
 $routes->get('/settings', 'SettingController::index', ['filter' => 'session']);
+
 $routes->get('/list', 'UsuarioController::list', ['filter' => 'session']);
 $routes->post('/edit', 'UsuarioController::edit', ['filter' => 'session']);
 $routes->post('/create', 'UsuarioController::create', ['filter' => 'session']);
@@ -21,7 +23,31 @@ $routes->post('/create', 'UsuarioController::create', ['filter' => 'session']);
 $routes->get('/company', 'CompanyController::index', ['filter' => 'session']);
 $routes->post('/company/save', 'CompanyController::save', ['filter' => 'session']);
 
+// predios
+$routes->get('/predio', 'PredioController::index', ['filter' => 'session']);
+$routes->post('/predio/save', 'PredioController::save', ['filter' => 'session']);
+
+// salas
+$routes->get('/sala', 'SalaController::index', ['filter' => 'session']);
+$routes->post('/sala/save', 'SalaController::save', ['filter' => 'session']);
+
+// contratos
+$routes->get('/contrato', 'ContratoController::index', ['filter' => 'session']);
+$routes->post('/contrato/save', 'ContratoController::save', ['filter' => 'session']);
+$routes->get('/contrato/view', 'ContratoController::view', ['filter' => 'session']);
+// clientes
+$routes->get('/cliente', 'ClienteController::index', ['filter' => 'session']);
+$routes->post('/cliente/save', 'ClienteController::save', ['filter' => 'session']);
+
+// permissions
+$routes->get('/permissions/listUserPermission', 'PermissionsController::listUserPermission', ['filter' => 'session']);
+$routes->post('/permissions/save', 'PermissionsController::save', ['filter' => 'session']);
+
+// user permissions
+$routes->post('/userPermissions/save', 'UserPermissionsController::save', ['filter' => ['session', 'permission:manage_settings']]);
+
+// pages permissions
+$routes->get('/permissionsPages/listPagesPermissions', 'PermissionsPagesController::listPagesPermissions', ['filter' => 'session']);
+$routes->post('/permissionsPages/save', 'PermissionsPagesController::save', ['filter' => 'session']);
+
 service('auth')->routes($routes);
-
-
-
