@@ -80,7 +80,7 @@
 
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar">
-			<a class='sidebar-brand' href='/'>
+			<a class='sidebar-brand' href='<?php echo base_url('/') ?>'>
 				<svg>
 					<use xlink:href="#ion-ios-pulse-strong"></use>
 				</svg>
@@ -99,7 +99,7 @@
 					</li>
 					<li class="sidebar-item active">
 						<a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link">
-							<i class="align-middle me-2 fas fa-fw fa-home"></i> <span class="align-middle">Cadastro</span>
+							<i class="align-middle me-2 fas fa-f	 fa-home"></i> <span class="align-middle">Cadastro</span>
 						</a>
 						<ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
 							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('company') ?>'><i class="align-middle me-2 fas fa-solid fa-shop"></i> Empresa</a></li>

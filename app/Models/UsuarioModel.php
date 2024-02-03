@@ -45,7 +45,7 @@ class UsuarioModel extends Model
     public function listUser($id = null)
     {
         $this->select('*');
-        $this->join('auth_identities', 'auth_identities.id = users.id');
+        $this->join('auth_identities', 'auth_identities.user_id = users.id');
 
         if (!empty($id)) {
             return $this->where('users.id', $id)->first();
