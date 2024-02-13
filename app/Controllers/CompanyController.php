@@ -9,9 +9,6 @@ class CompanyController extends BaseController
 {
     public function index()
     {
-        //$userModel = new UsuarioModel();
-        //$data['user'] = $userModel->listUser();
-
         $empresaController = new EmpresaModel();
 
         $data['empresa'] = $empresaController->readCompany();
@@ -70,5 +67,63 @@ class CompanyController extends BaseController
         );
 
         $empresaModel->insert($data);
+    }
+
+    public function edit()
+    {
+        $id = $this->request->getGet('id');
+
+        $empresaController = new EmpresaModel();
+
+        $data['empresa'] = $empresaController->listEmpresaId($id);
+
+        $data['title'] = 'IMOBI';
+        $data['content'] = view('company/edit', $data);  //view('sua_view', NUL' => $this->request->getPost(''), TRUE); // Carrega o conteúdo da sua view
+        return view('layouts/template_padrao', $data);
+    }
+
+    public function update()
+    {
+        try {
+            // Chame a função privada para processar os dados
+            $this->updateData();
+            session()->setFlashdata('success', 'Edição Salva com Sucesso!');
+            return redirect()->to(base_url('/company'));
+        } catch (\Throwable $th) {
+            session()->setFlashdata('error', 'Ocorreu um erro ao editar a Empresa. Detalhes: ' . $th->getMessage());
+            return redirect()->to(base_url('/company'));
+        }
+    }
+
+    private function updateData()
+    {
+
+        $id = $this->request->getPost('id');
+
+        $data = array(
+            'data_abertura' => $this->request->getPost('dataAbertura'),
+            'nome_empresarial' => $this->request->getPost('nomeEmpresarial'),
+            'nome_fantasia' => $this->request->getPost('nomeFantasia'),
+            'porte' => $this->request->getPost('porte'),
+            'codigo_atividade' => $this->request->getPost('codigoAtividade'),
+            'descricao_atividade' => $this->request->getPost('descricaoAtividade'),
+            'codigo_natureza_juridica' => $this->request->getPost('codigoNaturezaJuridica'),
+            'descricao_natureza_juridica' => $this->request->getPost('descricaoNaturezaJuridica'),
+            'logradouro' => $this->request->getPost('endereco'),
+            'numero' => $this->request->getPost('numero'),
+            'complemento' => $this->request->getPost('complemento'),
+            'cep' => $this->request->getPost('cep'),
+            'bairro' => $this->request->getPost('bairro'),
+            'municipio' => $this->request->getPost('municipio'),
+            'uf' => $this->request->getPost('uf'),
+            'endereco_eletronico' => $this->request->getPost('email'),
+            'telefone' => $this->request->getPost('telefone'),
+            'situacao_cadastral' => $this->request->getPost('situacaoCadastral'),
+            'data_situacao_cadastra' => $this->request->getPost('dataSituacaoCadastral'),
+
+        );
+        $empresaModel = new EmpresaModel();
+
+        $empresaModel->set($data)->where('id', $id)->update();
     }
 }

@@ -23,6 +23,8 @@ $routes->post('/create', 'UsuarioController::create', ['filter' => 'session']);
 // company
 $routes->get('/company', 'CompanyController::index', ['filter' => 'session']);
 $routes->post('/company/save', 'CompanyController::save', ['filter' => 'session']);
+$routes->get('/company/edit', 'CompanyController::edit', ['filter' => 'session']);
+$routes->post('/company/update', 'CompanyController::update', ['filter' => 'session']);
 
 // predios
 $routes->get('/predio', 'PredioController::index', ['filter' => 'session']);

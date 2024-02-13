@@ -20,10 +20,10 @@
                 </div>
 
                 <div class="list-group list-group-flush" role="tablist">
-                    <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#account" role="tab">
+                    <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#account" role="tab">
                         Cadastrar
                     </a>
-                    <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#password" role="tab">
+                    <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#password" role="tab">
                         Lista de Contratos
                     </a>
                 </div>
@@ -32,7 +32,7 @@
 
         <div class="col-md-9 col-xl-10">
             <div class="tab-content">
-                <div class="tab-pane fade show active" id="account" role="tabpanel">
+                <div class="tab-pane fade" id="account" role="tabpanel">
 
                     <div class="card">
                         <div class="card-header">
@@ -60,7 +60,7 @@
 
                 </div>
 
-                <div class="tab-pane fade" id="password" role="tabpanel">
+                <div class="tab-pane fade show active" id="password" role="tabpanel">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Lista de Prédios Cadastrados</h5>

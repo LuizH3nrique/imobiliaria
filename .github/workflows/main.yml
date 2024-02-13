@@ -31,3 +31,4 @@ jobs:
             **/.github*
             **/.github*/**
             .env
+            **/public/uploads/**
