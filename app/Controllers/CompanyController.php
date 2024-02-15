@@ -9,6 +9,7 @@ class CompanyController extends BaseController
 {
     public function index()
     {
+        
         $empresaController = new EmpresaModel();
 
         $data['empresa'] = $empresaController->readCompany();

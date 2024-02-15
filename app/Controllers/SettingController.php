@@ -15,6 +15,7 @@ class SettingController extends BaseController
 
     public function index()
     {
+        
         $userModel = new UsuarioModel();
         $data['user'] = $userModel->listUser();
 

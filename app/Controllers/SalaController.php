@@ -14,6 +14,7 @@ class SalaController extends BaseController
 
     public function index()
     {
+        
         $clienteModel = new ClienteModel();
         $data['cliente'] = $clienteModel->listaCliente();
         $contratoModel = new ContratoModel();

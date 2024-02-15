@@ -12,6 +12,7 @@ class ClienteController extends BaseController
     private $dirView = 'cliente';
     public function index()
     {
+        
         $clienteModel = new ClienteModel();
         $data['cliente'] = $clienteModel->listaCliente(); 
 

@@ -11,6 +11,7 @@ class PredioController extends BaseController
 
     public function index()
     {
+        
         $predioModel = new PredioModel();
         $data['predio'] = $predioModel->listPredio();
 
