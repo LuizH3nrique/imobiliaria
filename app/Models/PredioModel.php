@@ -46,4 +46,8 @@ class PredioModel extends Model
     {
         return $this->where("deleted_at", null)->findAll();
     }
+
+    public function listPredioId($id){
+        return $this->where("id", $id)->first();
+    }
 }

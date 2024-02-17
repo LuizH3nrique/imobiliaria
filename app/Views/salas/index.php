@@ -68,6 +68,7 @@
                                                             <th>Número da Sala</th>
                                                             <th>Cliente</th>
                                                             <th>Prédio</th>
+                                                            <th>Ações</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -77,6 +78,7 @@
                                                                 <td><?php echo $item["numero_sala"]; ?></td>
                                                                 <td><?php echo $item["nome_cliente"]; ?></td>
                                                                 <td><?php echo $item["nome"]; ?></td>
+                                                                <td><a type="button" class="btn btn-warning" href="<?php echo base_url('sala/edit?id=' . $item["id"]) ?>">Editar</a></td>
                                                             </tr>
                                                         <?php endforeach
                                                         ?>
@@ -90,7 +92,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <script src="<?php echo base_url("public/assets/js/masks.js"); ?>"></script>
                     <script>
                         $(document).ready(function() {
                             // Remover máscaras antes de enviar o formulário
@@ -101,8 +103,10 @@
                                 $('#inputCep').unmask();
                                 // Remover a máscara do telefone
                                 $('#inputTelefone').unmask();
-                                // Adicione outras remoções de máscaras conforme necessário
-
+                                //formatar valor money
+                                var calcaoValue = $('#inputCalcao').val().replace(/\./g, '').replace(',', '.');
+                                // Definir o valor ajustado no campo
+                                $('#inputCalcao').val(calcaoValue);
                                 // Continuar com o envio do formulário
                             });
                         });
@@ -140,6 +144,6 @@
                             }
                         }
                     </script>
-                    <script src="<?php echo base_url("public/assets/js/masks.js"); ?>"></script>
+
                     <?= $this->include('Views/settings/functionJs.php') ?>
                     <?= $this->include('Views/settings/modal/create_users_model') ?>

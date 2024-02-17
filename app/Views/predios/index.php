@@ -68,6 +68,7 @@
                                                             <th>#</th>
                                                             <th>CNPJ</th>
                                                             <th>Situação Cadastral</th>
+                                                            <th>Ações</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -76,6 +77,7 @@
                                                                 <td><?php echo $item["id"]; ?></td>
                                                                 <td><?php echo $item["nome"]; ?></td>
                                                                 <td><?php echo $item["situacao_cadastral"] ?></td>
+                                                                <td><a type="button" class="btn btn-warning" href="<?php echo base_url('predio/edit?id=' . $item["id"]) ?>">Editar</a></td>
                                                             </tr>
                                                         <?php endforeach
                                                         ?>

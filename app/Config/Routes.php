@@ -29,10 +29,14 @@ $routes->post('/company/update', 'CompanyController::update', ['filter' => 'sess
 // predios
 $routes->get('/predio', 'PredioController::index', ['filter' => 'session']);
 $routes->post('/predio/save', 'PredioController::save', ['filter' => 'session']);
+$routes->get('/predio/edit', 'PredioController::edit', ['filter' => 'session']);
+$routes->post('/predio/update', 'PredioController::update', ['filter' => 'session']);
 
 // salas
 $routes->get('/sala', 'SalaController::index', ['filter' => 'session']);
 $routes->post('/sala/save', 'SalaController::save', ['filter' => 'session']);
+$routes->get('/sala/edit', 'SalaController::edit', ['filter' => 'session']);
+$routes->post('/sala/update', 'SalaController::update', ['filter' => 'session']);
 
 // contratos
 $routes->get('/contrato', 'ContratoController::index', ['filter' => 'session']);

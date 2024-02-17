@@ -50,4 +50,9 @@ class SalaModel extends Model
             ->join('cliente', 'cliente.id = sala.locatario', 'left')
             ->findAll();
     }
+
+    public function listSalaId($id)
+    {
+        return $this->where('id', $id)->first();
+    }
 }
