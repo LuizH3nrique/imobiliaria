@@ -7,7 +7,7 @@ $(document).ready(function () {
     $('.date_time').mask('00/00/0000 00:00:00');
     $('.cep').mask('00000-000');
     $('.phone').mask('0000-0000');
-    $('.telefone').mask('(00) 0000-0000');
+    $('.telefone').mask('(00) 0 0000-0000');
     $('.celular').mask('(00) 0 0000-0000');
     $('.phone_us').mask('(000) 000-0000');
     $('.mixed').mask('AAA 000-S0S');

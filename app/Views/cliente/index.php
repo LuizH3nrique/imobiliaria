@@ -67,6 +67,7 @@
                                         <th>Nome do Cliente</th>
                                         <th>Documento</th>
                                         <th>Contato</th>
+                                        <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,6 +78,7 @@
                                             <td><?php echo $item["nome_cliente"]; ?></td>
                                             <td class="cnpj"><?php echo $item["documento"]; ?></td>
                                             <td class="telefone"><?php echo $item["telefone"]; ?></td>
+                                            <td><a type="button" class="btn btn-warning" href="<?php echo base_url('cliente/edit?id=' . $item["id"]) ?>">Editar</a></td>
                                         </tr>
                                     <?php endforeach
                                     ?>

@@ -42,9 +42,12 @@ $routes->post('/sala/update', 'SalaController::update', ['filter' => 'session'])
 $routes->get('/contrato', 'ContratoController::index', ['filter' => 'session']);
 $routes->post('/contrato/save', 'ContratoController::save', ['filter' => 'session']);
 $routes->get('/contrato/view', 'ContratoController::view', ['filter' => 'session']);
+
 // clientes
 $routes->get('/cliente', 'ClienteController::index', ['filter' => 'session']);
 $routes->post('/cliente/save', 'ClienteController::save', ['filter' => 'session']);
+$routes->get('/cliente/edit', 'ClienteController::edit', ['filter' => 'session']);
+$routes->post('/cliente/update', 'ClienteController::update', ['filter' => 'session']);
 
 // permissions
 $routes->get('/permissions/listUserPermission', 'PermissionsController::listUserPermission', ['filter' => 'session']);

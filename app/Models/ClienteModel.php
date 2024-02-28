@@ -42,4 +42,8 @@ class ClienteModel extends Model
     {
         return $this->where('deleted_at', null)->findAll();
     }
+
+    public function listaClienteById($id){
+        return $this->where('id', $id)->first();
+    }
 }
