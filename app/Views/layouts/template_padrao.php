@@ -99,11 +99,11 @@
 
 				<ul class="sidebar-nav">
 					<li class="sidebar-header">
-						Main
+						Principal
 					</li>
-					<li class="sidebar-item active">
+					<li class="sidebar-item">
 						<a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link">
-							<i class="align-middle me-2 fas fa-f	 fa-home"></i> <span class="align-middle">Cadastro</span>
+							<i class="align-middle me-2 fas fa-home"></i> <span class="align-middle">Cadastro</span>
 						</a>
 						<ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
 							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('company') ?>'><i class="align-middle me-2 fas fa-solid fa-shop"></i> Empresa</a></li>
@@ -113,20 +113,20 @@
 							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('contrato') ?>'><i class="align-middle me-2 fas fa-solid fa-file-contract"></i> Contratos</a></li>
 						</ul>
 					</li>
-					<!-- <li class="sidebar-item">
+					<li class="sidebar-item">
 						<a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
-							<i class="align-middle me-2 fas fa-fw fa-file"></i> <span class="align-middle">Pages</span>
+							<i class="align-middle me-2 fas fa-fw fa-file"></i> <span class="align-middle">Notas Fiscais</span>
 						</a>
 						<ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-							<li class="sidebar-item"><a class='sidebar-link' href='/pages-settings'>Settings</a></li>
-							<li class="sidebar-item"><a class='sidebar-link' href='/pages-clients'>Clients <span class="sidebar-badge badge rounded-pill bg-primary">New</span></a></li>
-							<li class="sidebar-item"><a class='sidebar-link' href='/pages-invoice'>Invoice</a></li>
+							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('notas-fiscais/entrada') ?>'>Entrada</a></li>
+							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('notas-fiscais/saida') ?>'>Saída <span class="sidebar-badge badge rounded-pill bg-primary">New</span></a></li>
+							<!-- <li class="sidebar-item"><a class='sidebar-link' href='/pages-invoice'>Invoice</a></li>
 							<li class="sidebar-item"><a class='sidebar-link' href='/pages-pricing'>Pricing</a></li>
 							<li class="sidebar-item"><a class='sidebar-link' href='/pages-tasks'>Tasks</a></li>
 							<li class="sidebar-item"><a class='sidebar-link' href='/pages-chat'>Chat <span class="sidebar-badge badge rounded-pill bg-primary">New</span></a></li>
-							<li class="sidebar-item"><a class='sidebar-link' href='/pages-blank'>Blank Page</a></li>
+							<li class="sidebar-item"><a class='sidebar-link' href='/pages-blank'>Blank Page</a></li> -->
 						</ul>
-					</li> -->
+					</li>
 					<!-- <li class="sidebar-item">
 						<a data-bs-target="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed">
 							<i class="align-middle me-2 fas fa-fw fa-sign-in-alt"></i> <span class="align-middle">Auth</span>

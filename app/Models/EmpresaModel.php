@@ -58,7 +58,13 @@ class EmpresaModel extends Model
         return $this->select('*')->where('deleted_at', null)->findAll();
     }
 
-    public function listEmpresaId($id){
+    public function listEmpresaId($id)
+    {
         return $this->where('empresa.id', $id)->first();
+    }
+
+    public function tomador()
+    {
+        return $this->select('id, nome_empresarial')->findAll();
     }
 }

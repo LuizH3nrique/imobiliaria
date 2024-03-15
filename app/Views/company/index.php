@@ -1,6 +1,3 @@
-<!-- <scrip src="<?php //echo base_url("public/assets/js/masks.js"); 
-                    ?>"></script> -->
-
 <div class="container-fluid">
 
     <div class="header">

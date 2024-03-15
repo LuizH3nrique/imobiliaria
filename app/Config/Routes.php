@@ -60,4 +60,11 @@ $routes->post('/userPermissions/save', 'UserPermissionsController::save', ['filt
 $routes->get('/permissionsPages/listPagesPermissions', 'PermissionsPagesController::listPagesPermissions', ['filter' => 'session']);
 $routes->post('/permissionsPages/save', 'PermissionsPagesController::save', ['filter' => 'session']);
 
+// NOTAS FISCAIS
+//Entrada
+$routes->get('/notas-fiscais/entrada', 'NotasFiscaisController::entrada', ['filter' => 'session']);
+
+//Saida
+$routes->get('/notas-fiscais/saida', 'NotasFiscaisController::saida', ['filter' => 'session']);
+
 service('auth')->routes($routes);
