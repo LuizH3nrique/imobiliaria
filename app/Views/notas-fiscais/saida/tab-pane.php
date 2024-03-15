@@ -18,7 +18,7 @@
                 <div class="row">
                     <?= $this->include($dirView .'/form') ?>
                 </div>
-                <button type="submit" id="buttonSave" class="btn btn-primary">Gerar Nota de Saída</button>
+                <button type="submit" id="buttonSave" class="btn btn-primary" disabled>Gerar Nota de Saída</button>
                 <?php echo form_close(); ?>
             </div>
         </div>
