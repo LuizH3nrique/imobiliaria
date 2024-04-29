@@ -39,7 +39,15 @@ class PrestadorModel extends Model
     protected $beforeInsert   = [];
     protected $beforeUpdate   = [];
 
-    public function prestador(){
-        return $this->select('id, nome')->findAll();
+    public function listPrestador()
+    {
+        return $this->select('prestador.id, prestador.documento, prestador.nome, prestador.telefone, prestador.email, tipo_pessoa.tipo')
+            ->join('tipo_pessoa', 'tipo_pessoa.id = prestador.tipo_pessoa')
+            ->findAll();
+    }
+
+    public function listPrestadorId($id)
+    {
+        return $this->select('*')->where('prestador.id', $id)->first();
     }
 }

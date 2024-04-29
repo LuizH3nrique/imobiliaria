@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\EmpresaModel;
+use App\Models\NotasFiscaisEntradaModel;
 use App\Models\NotasFiscaisSaidaModel;
 use App\Models\PaymentTipoModel;
 use App\Models\PrestadorModel;
@@ -16,7 +17,12 @@ class NotasFiscaisController extends BaseController
     
     public function entrada()
     {
-        $data['content'] = view($this->dirViewEntrada . '/index');
+        $notasFiscaisModel = new NotasFiscaisEntradaModel();
+        $data['notas'] = $notasFiscaisModel->list();
+
+        $data['dirView'] = $this->dirViewEntrada;
+
+        $data['content'] = view($this->dirViewEntrada . '/index', $data);
 
         return view('layouts/template_padrao', $data);
     }
@@ -30,7 +36,7 @@ class NotasFiscaisController extends BaseController
         $data['tomador'] = $empresaModel->tomador();
 
         $prestadorModel = new PrestadorModel();
-        $data['prestador'] = $prestadorModel->prestador();
+        $data['prestador'] = $prestadorModel->listPrestador();
 
         $tipoServicoModel = new TipoServicoModel();
         $data['servico'] = $tipoServicoModel->list();

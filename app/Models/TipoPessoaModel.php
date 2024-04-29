@@ -35,4 +35,8 @@ class TipoPessoaModel extends Model
     protected $beforeInsert   = [];
     protected $beforeUpdate   = [];
 
+    public function listTipoPessoa()
+    {
+        return $this->select('*')->findAll();
+    }
 }

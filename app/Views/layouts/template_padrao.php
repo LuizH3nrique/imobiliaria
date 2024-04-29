@@ -102,10 +102,10 @@
 						Principal
 					</li>
 					<li class="sidebar-item">
-						<a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link">
+						<a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link collapsed">
 							<i class="align-middle me-2 fas fa-home"></i> <span class="align-middle">Cadastro</span>
 						</a>
-						<ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
+						<ul id="dashboards" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
 							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('company') ?>'><i class="align-middle me-2 fas fa-solid fa-shop"></i> Empresa</a></li>
 							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('predio') ?>'><i class="align-middle me-2 fas fa-solid fa-building"></i> Prédios</a></li>
 							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('sala') ?>'><i class="align-middle me-2 fas fa-solid fa-kaaba"></i> Salas</a></li>
@@ -120,6 +120,8 @@
 						<ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
 							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('notas-fiscais/entrada') ?>'>Entrada</a></li>
 							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('notas-fiscais/saida') ?>'>Saída <span class="sidebar-badge badge rounded-pill bg-primary">New</span></a></li>
+							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('servicos/index') ?>'>Serviços <span class="sidebar-badge badge rounded-pill bg-primary">New</span></a></li>
+							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('prestador/index') ?>'>Prestador <span class="sidebar-badge badge rounded-pill bg-primary">New</span></a></li>
 							<!-- <li class="sidebar-item"><a class='sidebar-link' href='/pages-invoice'>Invoice</a></li>
 							<li class="sidebar-item"><a class='sidebar-link' href='/pages-pricing'>Pricing</a></li>
 							<li class="sidebar-item"><a class='sidebar-link' href='/pages-tasks'>Tasks</a></li>

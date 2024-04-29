@@ -67,4 +67,16 @@ $routes->get('/notas-fiscais/entrada', 'NotasFiscaisController::entrada', ['filt
 //Saida
 $routes->get('/notas-fiscais/saida', 'NotasFiscaisController::saida', ['filter' => 'session']);
 
+// SERVIÇOS
+$routes->get('/servicos/index', 'ServicosController::index', ['filter' => 'session']);
+$routes->post('/servicos/save', 'ServicosController::save', ['filter' => 'session']);
+$routes->get('/servicos/edit', 'ServicosController::edit', ['filter' => 'session']);
+$routes->post('/servicos/edit/save', 'ServicosController::editSave', ['filter' => 'session']);
+
+// PRESTADOR
+$routes->get('/prestador/index', 'PrestadorController::index', ['filter' => 'session']);
+$routes->post('/prestador/save', 'PrestadorController::save', ['filter' => 'session']);
+$routes->get('/prestador/edit', 'PrestadorController::edit', ['filter' => 'session']);
+$routes->post('/prestador/edit/save', 'PrestadorController::editSave', ['filter' => 'session']);
+
 service('auth')->routes($routes);

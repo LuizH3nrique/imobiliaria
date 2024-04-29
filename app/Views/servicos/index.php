@@ -2,12 +2,12 @@
 
     <div class="header">
         <h1 class="header-title">
-            Notas Fiscais de Saída
+            Serviços
         </h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href='/notas-fiscais/saida'>Cadastro</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Notas Fiscais</li>
+                <li class="breadcrumb-item active" aria-current="page">Serviços</li>
             </ol>
         </nav>
     </div>
@@ -24,7 +24,7 @@
                         Cadastrar
                     </a>
                     <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#password" role="tab">
-                        Lista de Notas Fiscais
+                        Lista de Serviços
                     </a>
                 </div>
             </div>

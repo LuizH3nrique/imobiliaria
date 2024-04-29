@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class TipoServicoModel extends Model
+class NotasFiscaisEntradaModel extends Model
 {
     protected $DBGroup          = "default";
-    protected $table            = 'tipo_servico';
+    protected $table            = 'notas_fiscais_entrada';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
@@ -16,8 +16,11 @@ class TipoServicoModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'id',
-        'descricao',
-        'deleted_at'
+        'empresa_id',
+        'cliente_id',
+        'payment_entrada_id',
+        'payment_status',
+        'deleted_at',
     ];
 
     // Dates
@@ -35,13 +38,7 @@ class TipoServicoModel extends Model
     protected $beforeInsert   = [];
     protected $beforeUpdate   = [];
 
-    public function list()
-    {
-        return $this->select('id, descricao, deleted_at')->findAll();
-    }
-
-    public function listId($id)
-    {
-        return $this->select('id, descricao, deleted_at')->where('id', $id)->first();
+    public function list(){
+        return $this->findAll();
     }
 }
