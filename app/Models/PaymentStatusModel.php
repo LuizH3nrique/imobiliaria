@@ -35,4 +35,8 @@ class PaymentStatusModel extends Model
     protected $beforeInsert   = [];
     protected $beforeUpdate   = [];
 
+    public function list()
+    {
+        return $this->select('*')->findAll();
+    }
 }

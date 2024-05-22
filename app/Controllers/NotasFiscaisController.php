@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\EmpresaModel;
 use App\Models\NotasFiscaisEntradaModel;
 use App\Models\NotasFiscaisSaidaModel;
+use App\Models\PaymentStatusModel;
 use App\Models\PaymentTipoModel;
 use App\Models\PrestadorModel;
 use App\Models\TipoServicoModel;
@@ -14,7 +15,7 @@ class NotasFiscaisController extends BaseController
 {
     private $dirViewSaida = 'Views/notas-fiscais/saida';
     private $dirViewEntrada = 'Views/notas-fiscais/entrada';
-    
+
     public function entrada()
     {
         $notasFiscaisModel = new NotasFiscaisEntradaModel();
@@ -44,10 +45,87 @@ class NotasFiscaisController extends BaseController
         $paymentTipoModel = new PaymentTipoModel();
         $data['paymentTipo'] = $paymentTipoModel->list();
 
+        $paymentStatus = new PaymentStatusModel();
+        $data['status'] = $paymentStatus->list();
+
         $data['dirView'] = $this->dirViewSaida;
 
         $data['content'] = view($this->dirViewSaida . '/index', $data);
 
         return view('layouts/template_padrao', $data);
+    }
+
+    public function saveSaida()
+    {
+        try {
+            $this->saveSaidaData();
+            session()->setFlashdata('success', 'Lançamento Gravado com Sucesso!');
+            return redirect()->to(base_url('notas-fiscais/saida'));
+        } catch (\Throwable $th) {
+            session()->setFlashdata('error', 'Ocorreu um erro ao Gravar o Lançamento. Detalhes: ' . $th->getMessage());
+            return redirect()->to(base_url('notas-fiscais/saida'));
+        }
+    }
+
+    private function saveSaidaData()
+    {
+        if (!$this->validate([
+            'documento_fiscal_saida' => 'uploaded[documento_fiscal_saida]|ext_in[documento_fiscal_saida,pdf]',
+        ])) {
+            $errors = $this->validator->getErrors();
+            $errorString = json_encode($errors);
+
+            session()->setFlashdata('error', $errorString);
+        }
+
+        $img = $this->request->getFile('documento_fiscal_saida');
+
+        if (!$img->hasMoved()) {
+
+            $randomName = $img->getRandomName();
+            $clientPath = $img->getClientPath();
+            $filepath = $img->store("../../public/uploads/pdfs/lancamentos/saida/", $randomName);
+
+            $lancamentoSaidaModel = new NotasFiscaisSaidaModel();
+
+            //converter o valor do contrato
+
+            $valor = $this->request->getPost("valor");
+
+            // Remova o ponto e substitua a vírgula
+            $valor = str_replace(".", "", $valor);
+            $valor = str_replace(",", ".", $valor);
+
+            // Converta a string para float
+            $valor = floatval($valor);
+
+            $data = [
+                'documento_fiscal_saida' => $randomName,
+                'documento_type_name_origin' => $clientPath,
+                'documento_type' => $filepath,
+                'tomador_id' => $this->request->getPost("tomador"),
+                'prestador_id' => $this->request->getPost("prestador"),
+                'servico_id' => $this->request->getPost("servico"),
+                'data_pagamento' => $this->request->getPost("data_pagamento"),
+                'payment_status' => $this->request->getPost("status"),
+                'descricao' => $this->request->getPost("descricao"),
+                'valor' => $valor,
+                'tipo_pagamento' => $this->request->getPost("tipo_pagamento")
+            ];
+
+            $lancamentoSaidaModel->insert($data);
+        } else {
+            session()->setFlashdata('error', 'Ocorreu um erro ao fazer upload do PDF.');
+            return redirect()->to(base_url('/company'));
+        }
+    }
+
+    public function viewDocumento()
+    {
+        $data = array(
+            'id' => $this->request->getGet('id')
+        );
+
+        return view('/notas-fiscais/saida/view', $data);
     }
 }

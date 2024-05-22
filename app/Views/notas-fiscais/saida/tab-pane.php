@@ -13,12 +13,12 @@
             <div class="card-body">
                 <?php
                 helper('form');
-                echo form_open_multipart(base_url("contrato/save"));
+                echo form_open_multipart(base_url("notas-fiscais/saida/save"));
                 ?>
                 <div class="row">
                     <?= $this->include($dirView .'/form') ?>
                 </div>
-                <button type="submit" id="buttonSave" class="btn btn-primary" disabled>Gerar Nota de Saída</button>
+                <button type="submit" id="buttonSave" class="btn btn-primary">Gerar Lançamento de Saída</button>
                 <?php echo form_close(); ?>
             </div>
         </div>
@@ -46,12 +46,12 @@
                         <?php foreach ($notas as $item) : ?>
                             <tr>
                                 <td><?php echo $item["id"]; ?></td>
-                                <td><?php echo $item["tomador_id"]; ?></td>
-                                <td><?php echo $item["prestador_id"]; ?></td>
-                                <td><?php echo $item["payment_id"]; ?></td>
-                                <td><?php echo $item["servico_id"]; ?></td>
-                                <td><?php echo $item["payment_status"]; ?></td>
-                                <td><a type="button" class="btn btn-primary" href="<?php echo base_url('contrato/view?id=' . $item["pdf_name_random"]); ?>" target="_blank">ABRIR NOTA FISCAL</a></td>
+                                <td><?php echo $item["nome_empresarial"]; ?></td>
+                                <td><?php echo $item["prestador_nome"]; ?></td>
+                                <td><?php echo $item["tipo_nome"]; ?></td>
+                                <td class="money"><?php echo $item["valor"]; ?></td>
+                                <td><?php echo $item["status_nome"]; ?></td>
+                                <td><a type="button" class="btn btn-primary" href="<?php echo base_url('notas-fiscais/view-documento?id=' . $item["documento_fiscal_saida"]); ?>" target="_blank">ABRIR NOTA FISCAL</a></td>
                             </tr>
                         <?php endforeach
                         ?>

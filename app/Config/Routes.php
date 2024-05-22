@@ -66,6 +66,8 @@ $routes->get('/notas-fiscais/entrada', 'NotasFiscaisController::entrada', ['filt
 
 //Saida
 $routes->get('/notas-fiscais/saida', 'NotasFiscaisController::saida', ['filter' => 'session']);
+$routes->post('/notas-fiscais/saida/save', 'NotasFiscaisController::saveSaida', ['filter' => 'session']);
+$routes->get('/notas-fiscais/view-documento', 'NotasFiscaisController::viewDocumento', ['filter' => 'session']);
 
 // SERVIÇOS
 $routes->get('/servicos/index', 'ServicosController::index', ['filter' => 'session']);

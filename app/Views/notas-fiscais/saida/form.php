@@ -42,13 +42,22 @@
     <label for="inputDataPagamento">Data para Pagamento</label>
     <input type="date" class="form-control" name="data_pagamento" id="inputDataPagamento" placeholder="Digite a Data para Pagamento" required>
 </div>
-<div class="mb-3 col-md-3">
+<div class="mb-3 col-md-4">
     <label for="inputDescricao">Descrição</label>
     <input type="text" class="form-control" name="descricao" id="inputDescricao" placeholder="Digite a Descrição do Pagamento">
 </div>
-<div class="mb-3 col-md-3">
+<div class="mb-3 col-md-4">
     <label for="inputDestinatario">Destinatário (Chave Pix)</label>
-    <input type="text" class="form-control" name="destinatario" id="inputDestinatario" placeholder="Digite a Chave Pix" required>
+    <input type="text" class="form-control" name="destinatario" id="inputDestinatario" placeholder="Digite a Chave Pix">
+</div>
+<div class="mb-3 col-md-4">
+    <label for="inputDestinatario">Status do Pagamento</label>
+    <select class="form-select" name="status" id="status" required>
+        <option disabled selected>Selecione</option>
+        <?php foreach ($status as $item) : ?>
+            <option value="<?php echo $item['id'] ?>"><?php echo $item['descricao'] ?></option>
+        <?php endforeach ?>
+    </select>
 </div>
 <div class="mb-3 col-md-6">
     <label for="formFile" class="form-label">Documento Fiscal (Prestador)</label>
