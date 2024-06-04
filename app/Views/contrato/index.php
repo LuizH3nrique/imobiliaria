@@ -72,6 +72,7 @@
                                         <th>Número de Contrato</th>
                                         <th>Valor do Contrato</th>
                                         <th class="d-none d-md-table-cell">Visualizar Contrato</th>
+                                        <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -81,6 +82,7 @@
                                             <td><?php echo $item["numero_contrato"]; ?></td>
                                             <td><p>R$ <?php echo $item["valor_contrato"]; ?></p></td>
                                             <td><a type="button" class="btn btn-primary" href="<?php echo base_url('contrato/view?id=' . $item["pdf_name_random"]); ?>" target="_blank">ABRIR PDF</a></td>
+                                            <td><a type="button" class="btn btn-warning" href="<?php echo base_url('contrato/edit?id=' . $item["id"]); ?>">Editar</a></td>
                                         </tr>
                                     <?php endforeach
                                     ?>
