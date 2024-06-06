@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ContratoModel;
+use App\Models\NotasFiscaisSaidaModel;
 use App\Models\UsuarioModel;
 
 class LoginController extends BaseController
@@ -29,6 +30,9 @@ class LoginController extends BaseController
                 $monthlyProjection[$month] += $annualRevenue / 12;
             }
         }
+
+        $notaFiscalSaida = new NotasFiscaisSaidaModel();
+        $data['gastos'] = $notaFiscalSaida->sumGastos();
 
         $data['contrato'] = $monthlyProjection;
 

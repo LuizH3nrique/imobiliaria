@@ -56,4 +56,8 @@ class NotasFiscaisSaidaModel extends Model
         join('payment_status', 'payment_status.id = payment_status')->
         findAll();
     }
+
+    public function sumGastos(){
+        return $this->selectSum('valor', 'total_gastos')->first();
+    }
 }

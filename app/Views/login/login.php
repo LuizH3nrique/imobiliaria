@@ -35,7 +35,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="col-xl-2 col-xxl-3 d-flex">
 			<div class="w-100">
 				<div class="row">
@@ -62,12 +61,38 @@
 							</div>
 						</div>
 					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col mt-0">
+										<h5 class="card-title">Gastos</h5>
+									</div>
+
+									<div class="col-auto">
+										<div class="avatar">
+											<div class="avatar-title rounded-circle bg-primary-dark">
+												<i class="align-middle" data-feather="dollar-sign"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+								<h1 class="display-5 mt-1 mb-3 money-prefix text-danger"><?php echo ($gastos['total_gastos'] === null) ? '0' : $gastos['total_gastos'] ?></h1>
+								<div class="mb-0">
+									<span class="text-dark">Total de Gastos</span>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="row">
+	<!-- <div class="row">
 		<div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
 			<div class="card flex-fill">
 				<div class="card-header">
@@ -173,7 +198,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
 
 <script>
