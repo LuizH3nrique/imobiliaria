@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\ClienteModel;
 use App\Models\EmpresaModel;
 use App\Models\NotasFiscaisEntradaModel;
 use App\Models\NotasFiscaisSaidaModel;
@@ -20,6 +21,21 @@ class NotasFiscaisController extends BaseController
     {
         $notasFiscaisModel = new NotasFiscaisEntradaModel();
         $data['notas'] = $notasFiscaisModel->list();
+
+        $clienteModel = new ClienteModel();
+        $data['cliente'] = $clienteModel->listaCliente();
+
+        $empresaModel = new EmpresaModel();
+        $data['tomador'] = $empresaModel->tomador();
+
+        $tipoServicoModel = new TipoServicoModel();
+        $data['servico'] = $tipoServicoModel->list();
+
+        $paymentTipoModel = new PaymentTipoModel();
+        $data['paymentTipo'] = $paymentTipoModel->list();
+
+        $paymentStatus = new PaymentStatusModel();
+        $data['status'] = $paymentStatus->list();
 
         $data['dirView'] = $this->dirViewEntrada;
 
@@ -120,7 +136,83 @@ class NotasFiscaisController extends BaseController
         }
     }
 
-    public function viewDocumento()
+    public function saveEntrada()
+    {
+        try {
+            $this->saveEntradaData();
+            session()->setFlashdata('success', 'Lançamento Gravado com Sucesso!');
+            return redirect()->to(base_url('notas-fiscais/entrada'));
+        } catch (\Throwable $th) {
+            session()->setFlashdata('error', 'Ocorreu um erro ao Gravar o Lançamento. Detalhes: ' . $th->getMessage());
+            return redirect()->to(base_url('notas-fiscais/entrada'));
+        }
+    }
+
+    private function saveEntradaData()
+    {
+
+        if (!$this->validate([
+            'documento_fiscal_entrada' => 'uploaded[documento_fiscal_entrada]|ext_in[documento_fiscal_entrada,pdf]',
+        ])) {
+            $errors = $this->validator->getErrors();
+            $errorString = json_encode($errors);
+
+            session()->setFlashdata('error', $errorString);
+        }
+
+        $img = $this->request->getFile('documento_fiscal_entrada');
+
+        if (!$img->hasMoved()) {
+
+            $randomName = $img->getRandomName();
+            $clientPath = $img->getClientPath();
+            $filepath = $img->store("../../public/uploads/pdfs/lancamentos/entrada/", $randomName);
+
+            $lancamentoEntradaModel = new NotasFiscaisEntradaModel();
+
+            //converter o valor do contrato
+
+            $valor = $this->request->getPost("valor");
+
+            // Remova o ponto e substitua a vírgula
+            $valor = str_replace(".", "", $valor);
+            $valor = str_replace(",", ".", $valor);
+
+            // Converta a string para float
+            $valor = floatval($valor);
+
+            $data = [
+                'documento_fiscal_entrada' => $randomName,
+                'documento_type_name_origin' => $clientPath,
+                'documento_type' => $filepath,
+                'empresa_id' => $this->request->getPost("tomador"),
+                'cliente_id' => $this->request->getPost("cliente"),
+                'tipo_servico' => $this->request->getPost("servico"),
+                'tipo_pagamento' => $this->request->getPost("tipo_pagamento"),
+                'valor' => $valor,
+                'data_pagamento' => $this->request->getPost("data_pagamento"),
+                'descricao' => $this->request->getPost("descricao"),
+                'chave_pix' => $this->request->getPost("destinatario"),
+                'payment_status' => $this->request->getPost("status")
+            ];
+
+            $lancamentoEntradaModel->insert($data);
+        } else {
+            session()->setFlashdata('error', 'Ocorreu um erro ao fazer upload do PDF.');
+            return redirect()->to(base_url('notas-fiscais/entrada'));
+        }
+    }
+
+    public function viewDocumentoEntrada()
+    {
+        $data = array(
+            'id' => $this->request->getGet('id')
+        );
+
+        return view('/notas-fiscais/entrada/view', $data);
+    }
+
+    public function viewDocumentoSaida()
     {
         $data = array(
             'id' => $this->request->getGet('id')

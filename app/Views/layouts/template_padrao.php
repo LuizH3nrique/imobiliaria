@@ -115,7 +115,7 @@
 					</li>
 					<li class="sidebar-item">
 						<a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
-							<i class="align-middle me-2 fas fa-fw fa-file"></i> <span class="align-middle">Notas Fiscais</span>
+							<i class="align-middle me-2 fas fa-fw fa-file"></i> <span class="align-middle">Lançamentos</span>
 						</a>
 						<ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
 							<li class="sidebar-item"><a class='sidebar-link' href='<?php echo base_url('notas-fiscais/entrada') ?>'>Entrada</a></li>

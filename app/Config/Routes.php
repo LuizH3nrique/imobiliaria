@@ -65,11 +65,13 @@ $routes->post('/permissionsPages/save', 'PermissionsPagesController::save', ['fi
 // NOTAS FISCAIS
 //Entrada
 $routes->get('/notas-fiscais/entrada', 'NotasFiscaisController::entrada', ['filter' => 'session']);
+$routes->post('/nota-fiscal/entrada/save', 'NotasFiscaisController::saveEntrada', ['filter' => 'session']);
+$routes->get('/notas-fiscais/view-documento-entrada', 'NotasFiscaisController::viewDocumentoEntrada', ['filter' => 'session']);
 
 //Saida
 $routes->get('/notas-fiscais/saida', 'NotasFiscaisController::saida', ['filter' => 'session']);
 $routes->post('/notas-fiscais/saida/save', 'NotasFiscaisController::saveSaida', ['filter' => 'session']);
-$routes->get('/notas-fiscais/view-documento', 'NotasFiscaisController::viewDocumento', ['filter' => 'session']);
+$routes->get('/notas-fiscais/view-documento-saida', 'NotasFiscaisController::viewDocumentoSaida', ['filter' => 'session']);
 
 // SERVIÇOS
 $routes->get('/servicos/index', 'ServicosController::index', ['filter' => 'session']);

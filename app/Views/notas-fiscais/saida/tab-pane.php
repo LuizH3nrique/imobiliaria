@@ -8,7 +8,7 @@
                         <i class="align-middle" data-feather="refresh-cw"></i>
                     </a>
                 </div>
-                <h5 class="card-title mb-0">Cadastrar Nova Nota Fiscal de Saída</h5>
+                <h5 class="card-title mb-0">Cadastrar Novo Lançamento de Saída</h5>
             </div>
             <div class="card-body">
                 <?php
@@ -28,7 +28,7 @@
     <div class="tab-pane fade show active" id="password" role="tabpanel">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Lista de Notas Fiscais de Saída</h5>
+                <h5 class="card-title">Lista de Lançamentos de Saída</h5>
 
                 <table class="table" id="tabelaResponsivaDataTable">
                     <thead>
