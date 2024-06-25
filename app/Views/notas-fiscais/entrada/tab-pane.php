@@ -16,7 +16,7 @@
                 echo form_open_multipart(base_url("nota-fiscal/entrada/save"));
                 ?>
                 <div class="row">
-                    <?= $this->include($dirView .'/form') ?>
+                    <?= $this->include($dirView . '/form') ?>
                 </div>
                 <button type="submit" id="buttonSave" class="btn btn-primary">Gerar Lançamento de Entrada</button>
                 <?php echo form_close(); ?>
@@ -50,8 +50,13 @@
                                 <td><?php echo $item["nome_cliente"]; ?></td>
                                 <td><?php echo $item["tipo_nome"]; ?></td>
                                 <td class="money"><?php echo $item["valor"]; ?></td>
-                                <td><?php echo $item["status_nome"]; ?></td>
-                                <td><a type="button" class="btn btn-primary" href="<?php echo base_url('notas-fiscais/view-documento-entrada?id=' . $item["documento_fiscal_entrada"]); ?>" target="_blank">ABRIR NOTA FISCAL</a></td>
+                                <td><?php echo (($item["status_nome"] === null ? 'Vazio' : $item["status_nome"])); ?></td>
+                                <td><?php if ($item["documento_fiscal_entrada"] === null) : ?>
+                                        Vazio
+                                    <?php else : ?>
+                                        <a type="button" class="btn btn-primary" href="<?php echo base_url('notas-fiscais/view-documento-entrada?id=' . $item["documento_fiscal_entrada"]); ?>" target="_blank">ABRIR NOTA FISCAL</a>
+                                    <?php endif ?>
+                                </td>
                             </tr>
                         <?php endforeach
                         ?>
