@@ -1,274 +1,305 @@
+<?php
+
+use App\Models\NotasFiscaisSaidaModel;
+
+$modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
+
+?>
+
 <div class="container-fluid">
+    <div class="header">
+        <h1 class="header-title">
+            Bem-vindo, <?php echo auth()->user()->username; ?>
+        </h1>
+    </div>
 
-	<div class="header">
-		<h1 class="header-title">
-			Welcome back, <?php echo auth()->user()->username; ?>
-		</h1>
-	</div>
+    <div class="row">
+        <!-- Abas de Entradas -->
+        <div class="col-xl-9 col-xxl-9">
+            <div class="card flex-fill w-100">
+                <div class="card-body py-3">
+                    <!-- Nav tabs para Entradas -->
+                    <ul class="nav nav-tabs entradas-tabs" role="tablist">
+                        <?php if (empty($meses_entradas)) : ?>
+                            Lista de Entradas por Serviço está vazia
+                        <?php else : ?>
+                            <?php foreach ($meses_entradas as $item) : ?>
+                                <li class="nav-item">
+                                    <a class="nav-link <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>" data-toggle="tab" href="#tab_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>" data-mes="<?php echo $item['mes']; ?>" data-ano="<?php echo $item['ano']; ?>">
+                                        <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </ul>
 
-	<div class="row">
-		<div class="col-xl-8 col-xxl-9">
-			<div class="card flex-fill w-100">
-				<div class="card-header">
-					<div class="card-actions float-end">
-						<a href="#" class="me-1">
-							<i class="align-middle" data-feather="refresh-cw"></i>
-						</a>
-						<div class="d-inline-block dropdown show">
-							<a href="#" data-bs-toggle="dropdown" data-bs-display="static">
-								<i class="align-middle" data-feather="more-vertical"></i>
-							</a>
+                    <!-- Tab panes para Entradas -->
+                    <div class="tab-content entradas-content">
+                        <?php foreach ($meses_entradas as $item) : ?>
+                            <div id="tab_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>" class="tab-pane fade <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>">
+                                <h5>Lista de Entradas por Serviço - <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?></h5>
+                                <div id="content_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>">
+                                    <!-- Aqui serão carregados os dados via AJAX -->
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-							<div class="dropdown-menu dropdown-menu-end">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<a class="dropdown-item" href="#">Something else here</a>
-							</div>
-						</div>
-					</div>
-					<h5 class="card-title mb-0">Recent Movement</h5>
-				</div>
-				<div class="card-body py-3">
-					<div class="chart chart-sm">
-						<canvas id="chartjs-dashboard-line"></canvas>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-xl-2 col-xxl-3 d-flex">
-			<div class="w-100">
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="card">
-							<div class="card-body">
-								<div class="row">
-									<div class="col mt-0">
-										<h5 class="card-title">Projeção</h5>
-									</div>
+        <!-- Total de Entradas do Mês Selecionado -->
+        <div class="col-xl-3 col-xxl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <h5 class="card-title text-success">Entrada</h5>
+                        </div>
+                        <div class="col-auto">
+                            <div class="avatar">
+                                <div class="avatar-title rounded-circle bg-success">
+                                    <i class="align-middle" data-feather="dollar-sign"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h1 id="total-entradas-mes" class="display-5 mt-1 mb-3 money">
+                        <h1 class="display-5 mt-1 mb-3 money text-success" id="valor_entradas_mes">
+                            0
+                        </h1>
+                    </h1>
+                    <div class="mb-0">
+                        <span class="text-dark">Total de Entradas do Mês Selecionado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-									<div class="col-auto">
-										<div class="avatar">
-											<div class="avatar-title rounded-circle bg-primary-dark">
-												<i class="align-middle" data-feather="dollar-sign"></i>
-											</div>
-										</div>
-									</div>
-								</div>
-								<h1 class="display-5 mt-1 mb-3 money"><?php echo $totalAnual = array_sum($contrato); ?></h1>
-								<div class="mb-0">
-									<span class="text-dark">Arrecadação Anual</span>
-								</div>
-							</div>
-						</div>
-					</div>
+    <div class="row">
+        <!-- Abas de Gastos -->
+        <div class="col-xl-9 col-xxl-9">
+            <div class="card flex-fill w-100">
+                <div class="card-body py-3">
+                    <!-- Nav tabs para Gastos -->
+                    <ul class="nav nav-tabs gastos-tabs" role="tablist">
+                        <?php if (empty($meses_gastos)) : ?>
+                            Lista de Gastos por Serviço está vazia
+                        <?php else : ?>
+                            <?php foreach ($meses_gastos as $item) : ?>
+                                <li class="nav-item">
+                                    <a class="nav-link <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>" data-toggle="tab" href="#tab_gasto_<?php echo $item['mes'] . '-' . $item['ano']; ?>" data-mes="<?php echo $item['mes']; ?>" data-ano="<?php echo $item['ano']; ?>">
+                                        <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </ul>
 
-				</div>
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="card">
-							<div class="card-body">
-								<div class="row">
-									<div class="col mt-0">
-										<h5 class="card-title">Gastos</h5>
-									</div>
+                    <!-- Tab panes para Gastos -->
+                    <div class="tab-content gastos-content">
+                        <?php foreach ($meses_gastos as $item) : ?>
+                            <div id="tab_gasto_<?php echo $item['mes'] . '-' . $item['ano']; ?>" class="tab-pane fade <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>">
+                                <h5>Lista de Gastos por Serviço - <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?></h5>
+                                <div id="content_gasto_<?php echo $item['mes'] . '-' . $item['ano']; ?>">
+                                    <!-- Aqui serão carregados os dados via AJAX -->
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-									<div class="col-auto">
-										<div class="avatar">
-											<div class="avatar-title rounded-circle bg-primary-dark">
-												<i class="align-middle" data-feather="dollar-sign"></i>
-											</div>
-										</div>
-									</div>
-								</div>
-								<h1 class="display-5 mt-1 mb-3 money-prefix text-danger"><?php echo ($gastos['total_gastos'] === null) ? '0' : $gastos['total_gastos'] ?></h1>
-								<div class="mb-0">
-									<span class="text-dark">Total de Gastos</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- <div class="row">
-		<div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
-			<div class="card flex-fill">
-				<div class="card-header">
-					<div class="card-actions float-end">
-						<a href="#" class="me-1">
-							<i class="align-middle" data-feather="refresh-cw"></i>
-						</a>
-						<div class="d-inline-block dropdown show">
-							<a href="#" data-bs-toggle="dropdown" data-bs-display="static">
-								<i class="align-middle" data-feather="more-vertical"></i>
-							</a>
-
-							<div class="dropdown-menu dropdown-menu-end">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<a class="dropdown-item" href="#">Something else here</a>
-							</div>
-						</div>
-					</div>
-					<h5 class="card-title mb-0">Calendar</h5>
-				</div>
-				<div class="card-body d-flex">
-					<div class="align-self-center w-100">
-						<div class="chart">
-							<div id="datetimepicker-dashboard"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
-			<div class="card flex-fill w-100">
-				<div class="card-header">
-					<div class="card-actions float-end">
-						<a href="#" class="me-1">
-							<i class="align-middle" data-feather="refresh-cw"></i>
-						</a>
-						<div class="d-inline-block dropdown show">
-							<a href="#" data-bs-toggle="dropdown" data-bs-display="static">
-								<i class="align-middle" data-feather="more-vertical"></i>
-							</a>
-
-							<div class="dropdown-menu dropdown-menu-end">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<a class="dropdown-item" href="#">Something else here</a>
-							</div>
-						</div>
-					</div>
-					<h5 class="card-title mb-0">Current Visitors</h5>
-				</div>
-				<div class="card-body px-4">
-					<div id="world_map" style="height:350px;"></div>
-				</div>
-			</div>
-		</div>
-		<div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
-			<div class="card flex-fill w-100">
-				<div class="card-header">
-					<div class="card-actions float-end">
-						<a href="#" class="me-1">
-							<i class="align-middle" data-feather="refresh-cw"></i>
-						</a>
-						<div class="d-inline-block dropdown show">
-							<a href="#" data-bs-toggle="dropdown" data-bs-display="static">
-								<i class="align-middle" data-feather="more-vertical"></i>
-							</a>
-
-							<div class="dropdown-menu dropdown-menu-end">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<a class="dropdown-item" href="#">Something else here</a>
-							</div>
-						</div>
-					</div>
-					<h5 class="card-title mb-0">Browser Usage</h5>
-				</div>
-				<div class="card-body d-flex">
-					<div class="align-self-center w-100">
-						<div class="py-3">
-							<div class="chart chart-xs">
-								<canvas id="chartjs-dashboard-pie"></canvas>
-							</div>
-						</div>
-
-						<table class="table mb-0">
-							<tbody>
-								<tr>
-									<td><i class="fas fa-circle text-primary fa-fw"></i> Chrome</td>
-									<td class="text-end">4401</td>
-								</tr>
-								<tr>
-									<td><i class="fas fa-circle text-warning fa-fw"></i> Firefox</td>
-									<td class="text-end">4003</td>
-								</tr>
-								<tr>
-									<td><i class="fas fa-circle text-danger fa-fw"></i> IE</td>
-									<td class="text-end">1589</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
+        <!-- Total de Gastos do Mês Selecionado -->
+        <div class="col-xl-3 col-xxl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <h5 class="card-title text-danger">Gastos</h5>
+                        </div>
+                        <div class="col-auto">
+                            <div class="avatar">
+                                <div class="avatar-title rounded-circle bg-danger">
+                                    <i class="align-middle" data-feather="dollar-sign"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h1 id="total-gastos-mes" class="display-5 mt-1 mb-3 money">
+                        <h1 class="display-5 mt-1 mb-3 money text-danger" id="valor_gastos_mes">
+                            0
+                        </h1>
+                    </h1>
+                    <div class="mb-0">
+                        <span class="text-dark">Total de Gastos do Mês Selecionado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-	<?php
-	// Calcular a soma acumulada dos valores mensais
-	$totalAcumulado = 0;
-	$projecaoMensal = [];
-	foreach ($contrato as $val) {
-		$totalAcumulado += $val;
-		$projecaoMensal[] = $totalAcumulado;
-	}
-	?>
-	document.addEventListener("DOMContentLoaded", function() {
+    $(document).ready(function() {
+        // Carregar dados da aba ativa ao abrir a página (para Gastos)
+        var activeGastoTab = $('.gastos-tabs .nav-link.show.active');
+        carregarDadosAbaGastos(activeGastoTab);
 
-		// Projeção mês a mês somando os valores recebidos nos meses anteriores
-		var projectionValues = [<?php foreach ($projecaoMensal as $val) echo $val . ','; ?>];
-		// Line chart
-		new Chart(document.getElementById("chartjs-dashboard-line"), {
-			type: 'line',
-			data: {
-				labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-				datasets: [{
-					label: "Projection", // Nome do dataset da projeção
-					fill: true,
-					backgroundColor: window.theme.primary,
-					borderColor: window.theme.primary,
-					borderWidth: 2,
-					data: projectionValues // Usar os valores da projeção aqui
-				}]
-			},
-			options: {
-				maintainAspectRatio: false,
-				legend: {
-					display: false
-				},
-				tooltips: {
-					intersect: false
-				},
-				hover: {
-					intersect: true
-				},
-				plugins: {
-					filler: {
-						propagate: false
-					}
-				},
-				elements: {
-					point: {
-						radius: 0
-					}
-				},
-				scales: {
-					xAxes: [{
-						reverse: true,
-						gridLines: {
-							color: "rgba(0,0,0,0.0)"
-						}
-					}],
-					yAxes: [{
-						ticks: {
-							stepSize: 100000
-						},
-						display: true,
-						gridLines: {
-							color: "rgba(0,0,0,0)",
-							fontColor: "#fff"
-						}
-					}]
-				}
-			}
-		});
-	});
+        // Carregar dados da aba ativa ao abrir a página (para Entradas)
+        var activeEntradaTab = $('.entradas-tabs .nav-link.show.active');
+        carregarDadosAbaEntradas(activeEntradaTab);
+
+        // Evento de clique nas abas de Gastos para carregar os dados via AJAX
+        $('.gastos-tabs .nav-link').on('click', function(e) {
+            e.preventDefault();
+            var tabLink = $(this);
+            carregarDadosAbaGastos(tabLink);
+        });
+
+        // Evento de clique nas abas de Entradas para carregar os dados via AJAX
+        $('.entradas-tabs .nav-link').on('click', function(e) {
+            e.preventDefault();
+            var tabLink = $(this);
+            carregarDadosAbaEntradas(tabLink);
+        });
+    });
+
+    // Função para fazer a requisição AJAX e carregar os dados da aba de Gastos
+    function carregarDadosAbaGastos(tabLink) {
+        var tabId = tabLink.attr('href').replace('#', ''); // ID da aba
+        var mes = tabLink.data('mes'); // Mês
+        var ano = tabLink.data('ano'); // Ano
+
+        // Fazer a requisição AJAX
+        $.ajax({
+            url: '<?php echo base_url('dashboard/dados-por-mes/saida') ?>',
+            method: 'GET',
+            dataType: 'json',
+            data: {
+                mes: mes,
+                ano: ano
+            },
+            success: function(response) {
+                // Limpar o conteúdo atual da aba
+                $('#content_gasto_' + mes + '-' + ano).empty();
+
+                // Verificar se há dados retornados
+                if (response.length > 0) {
+                    var html = '<table class="table table-striped">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th>Tipo de Serviço</th>' +
+                        '<th>Total de Gastos</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+
+                    // Iterar sobre os dados recebidos e construir as linhas da tabela
+                    var totalGastosMes = 0;
+                    $.each(response, function(index, item) {
+                        // Formatando o valor como moeda brasileira
+                        var valorFormatado = parseFloat(item.total_gastos).toLocaleString('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL'
+                        });
+
+                        html += '<tr>' +
+                            '<td>' + item.descricao + '</td>' +
+                            '<td>' + valorFormatado + '</td>' +
+                            '</tr>';
+
+                        totalGastosMes += parseFloat(item.total_gastos);
+                    });
+
+                    // Formatando o totalGastosMes como moeda brasileira e exibindo no elemento
+                    $('#valor_gastos_mes').text(totalGastosMes.toLocaleString('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    }));
+
+                    html += '</tbody></table>';
+                } else {
+                    // Se não houver dados, exibir mensagem de nenhum dado encontrado
+                    var html = '<p class="text-muted">Nenhum gasto registrado para este mês.</p>';
+                }
+
+                // Inserir o HTML construído na aba correspondente
+                $('#content_gasto_' + mes + '-' + ano).html(html);
+            },
+            error: function() {
+                $('#content_gasto_' + mes + '-' + ano).html('<p class="text-muted">Erro ao carregar os dados.</p>');
+            }
+        });
+    }
+
+    // Função para fazer a requisição AJAX e carregar os dados da aba de Entradas
+    function carregarDadosAbaEntradas(tabLink) {
+        var tabId = tabLink.attr('href').replace('#', ''); // ID da aba
+        var mes = tabLink.data('mes'); // Mês
+        var ano = tabLink.data('ano'); // Ano
+
+        // Fazer a requisição AJAX
+        $.ajax({
+            url: '<?php echo base_url('dashboard/dados-por-mes/entrada') ?>',
+            method: 'GET',
+            dataType: 'json',
+            data: {
+                mes: mes,
+                ano: ano
+            },
+            success: function(response) {
+                // Limpar o conteúdo atual da aba
+                $('#content_entrada_' + tabId).empty();
+
+                // Verificar se há dados retornados
+                if (response.length > 0) {
+                    var html = '<table class="table table-striped">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th>Tipo de Serviço</th>' +
+                        '<th>Total de Entradas</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+
+                    // Iterar sobre os dados recebidos e construir as linhas da tabela
+                    var totalEntradasMes = 0;
+                    $.each(response, function(index, item) {
+                        // Formatando o valor como moeda brasileira
+                        var valorFormatado = parseFloat(item.total_entradas).toLocaleString('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL'
+                        });
+
+                        html += '<tr>' +
+                            '<td>' + item.descricao + '</td>' +
+                            '<td>' + valorFormatado + '</td>' +
+                            '</tr>';
+
+                        totalEntradasMes += parseFloat(item.total_entradas);
+                    });
+
+                    // Formatando o totalEntradasMes como moeda brasileira e exibindo no elemento
+                    $('#valor_entradas_mes').text(totalEntradasMes.toLocaleString('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    }));
+
+                    html += '</tbody></table>';
+                } else {
+                    // Se não houver dados, exibir mensagem de nenhum dado encontrado
+                    var html = '<p class="text-muted">Nenhuma entrada registrada para este mês.</p>';
+                }
+
+                // Inserir o HTML construído na aba correspondente
+                $('#content_entrada_' + tabId).html(html);
+            },
+            error: function() {
+                $('#content_entrada_' + tabId).html('<p class="text-muted">Erro ao carregar os dados.</p>');
+            }
+        });
+    }
 </script>

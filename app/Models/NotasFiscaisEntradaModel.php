@@ -57,4 +57,34 @@ class NotasFiscaisEntradaModel extends Model
         join('payment_status', 'payment_status.id = notas_fiscais_entrada.payment_status', 'left')->
         findAll();
     }
+
+    public function sumEntrada(){
+        return $this->selectSum('valor', 'total_gastos')->first();
+    }
+
+    public function listEntradaPorServico()
+    {
+        return $this->select('tipo_servico.descricao')
+            ->selectSum('valor', 'total_entrada')
+            ->join('tipo_servico', 'tipo_servico.id = notas_fiscais_entrada.tipo_servico')
+            ->groupBy('tipo_servico.descricao')
+            ->findAll();
+    }
+
+    public function mesAnoGastos()
+    {
+        return $this->select("MONTH(data_pagamento) as mes, YEAR(data_pagamento) as ano, MONTHNAME(data_pagamento) as nome_mes")->distinct("MONTH(data_pagamento) as mes, YEAR(data_pagamento) as ano")
+            ->orderBy('data_pagamento', 'ASC')
+            ->findAll();
+    }
+
+    public function listaGastosPorMes($mes, $ano)
+    {
+        return $this->select('tipo_servico, tipo_servico.descricao, SUM(valor) as total_gastos')
+            ->join('tipo_servico', 'tipo_servico.id = notas_fiscais_entrada.tipo_servico')
+            ->where('MONTH(data_pagamento)', $mes)
+            ->where('YEAR(data_pagamento)', $ano)
+            ->groupBy('tipo_servico, tipo_servico.descricao')
+            ->findAll();
+    }
 }

@@ -10,6 +10,9 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'LoginController::index', ['filter' => 'session']);
 $routes->get('/teste', 'Teste::index', ['filter' => 'session']);
 
+// ajax dashboard
+$routes->get('/dashboard/dados-por-mes/entrada', 'DashboardController::dadosPorMesEntrada', ['filter' => 'session']);
+$routes->get('/dashboard/dados-por-mes/saida', 'DashboardController::dadosPorMesSaida', ['filter' => 'session']);
 
 // users
 //$routes->get('/settings', 'SettingController::index', ['filter' => 'session']);

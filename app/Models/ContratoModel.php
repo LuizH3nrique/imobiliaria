@@ -46,11 +46,6 @@ class ContratoModel extends Model
     protected $beforeInsert   = [];
     protected $beforeUpdate   = [];
 
-    public function listContrato()
-    {
-        return $this->where("deleted_at", null)->findAll();
-    }
-
     public function contratoId($id){
         return $this->select('*')->where('id', $id)->first();
     }

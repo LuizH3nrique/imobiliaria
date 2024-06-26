@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ContratoModel;
+use App\Models\NotasFiscaisEntradaModel;
 use App\Models\NotasFiscaisSaidaModel;
 use App\Models\UsuarioModel;
 
@@ -11,30 +12,19 @@ class LoginController extends BaseController
 {
     public function index()
     {
-        $contratoModel = new ContratoModel();
-        $contracts = $contratoModel->listContrato();
-
-        // Array para armazenar a projeção de arrecadação por mês
-        $monthlyProjection = array_fill(1, 12, 0);
-
-        // Calcular a projeção mensal para cada contrato
-        foreach ($contracts as $contract) {
-            // Supondo que cada contrato seja mensal
-            $monthlyRevenue = $contract['valor_contrato'];
-
-            // Multiplicar o valor mensal pelo número de meses no ano (12 meses)
-            $annualRevenue = $monthlyRevenue * 12;
-
-            // Distribuir o valor anual igualmente pelos meses
-            for ($month = 1; $month <= 12; $month++) {
-                $monthlyProjection[$month] += $annualRevenue / 12;
-            }
-        }
-
         $notaFiscalSaida = new NotasFiscaisSaidaModel();
         $data['gastos'] = $notaFiscalSaida->sumGastos();
 
-        $data['contrato'] = $monthlyProjection;
+        $notaFiscalEntrada = new NotasFiscaisEntradaModel();
+        $data['entrada'] = $notaFiscalEntrada->sumEntrada();
+
+        $data['gastos_mes'] = $notaFiscalSaida->listGastosPorServico();
+
+        $data['entradas_mes'] = $notaFiscalEntrada->listEntradaPorServico();
+
+        $data['meses_gastos'] = $notaFiscalSaida->mesAnoGastos();
+
+        $data['meses_entradas'] = $notaFiscalEntrada->mesAnoGastos();
 
         $data['title'] = 'Página Inicial';
         $data['content'] = view('login/login', $data);  //view('sua_view', NULL, TRUE); // Carrega o conteúdo da sua view
