@@ -21,7 +21,7 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
                     <!-- Nav tabs para Entradas -->
                     <ul class="nav nav-tabs entradas-tabs" role="tablist">
                         <?php if (empty($meses_entradas)) : ?>
-                            Lista de Entradas por Serviço está vazia
+                            <p class="fs-5 m-2 fw-bolder"><i class="fa-solid fa-triangle-exclamation fs-4" style="color: #FFD43B;"></i> Lista de Entradas por Serviço está vazia</p>
                         <?php else : ?>
                             <?php foreach ($meses_entradas as $item) : ?>
                                 <li class="nav-item">
@@ -37,7 +37,7 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
                     <div class="tab-content entradas-content">
                         <?php foreach ($meses_entradas as $item) : ?>
                             <div id="tab_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>" class="tab-pane fade <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>">
-                                <h5>Lista de Entradas por Serviço - <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?></h5>
+                                <p class="fs-5 m-2 fw-bolder">Lista de Entradas por Serviço - <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?></p>
                                 <div id="content_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>">
                                     <!-- Aqui serão carregados os dados via AJAX -->
                                 </div>
@@ -85,7 +85,7 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
                     <!-- Nav tabs para Gastos -->
                     <ul class="nav nav-tabs gastos-tabs" role="tablist">
                         <?php if (empty($meses_gastos)) : ?>
-                            Lista de Gastos por Serviço está vazia
+                            <p class="fs-5 m-2 fw-bolder"><i class="fa-solid fa-triangle-exclamation fs-4" style="color: #FFD43B;"></i> Lista de Gastos por Serviço está vazia</p>
                         <?php else : ?>
                             <?php foreach ($meses_gastos as $item) : ?>
                                 <li class="nav-item">
@@ -101,7 +101,7 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
                     <div class="tab-content gastos-content">
                         <?php foreach ($meses_gastos as $item) : ?>
                             <div id="tab_gasto_<?php echo $item['mes'] . '-' . $item['ano']; ?>" class="tab-pane fade <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>">
-                                <h5>Lista de Gastos por Serviço - <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?></h5>
+                                <p class="fs-5 m-2 fw-bolder">Lista de Gastos por Serviço - <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?></p>
                                 <div id="content_gasto_<?php echo $item['mes'] . '-' . $item['ano']; ?>">
                                     <!-- Aqui serão carregados os dados via AJAX -->
                                 </div>
@@ -173,6 +173,8 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
         var mes = tabLink.data('mes'); // Mês
         var ano = tabLink.data('ano'); // Ano
 
+        console.log(tabId, mes, ano);
+
         // Fazer a requisição AJAX
         $.ajax({
             url: '<?php echo base_url('dashboard/dados-por-mes/saida') ?>',
@@ -191,8 +193,8 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
                     var html = '<table class="table table-striped">' +
                         '<thead>' +
                         '<tr>' +
-                        '<th>Tipo de Serviço</th>' +
-                        '<th>Total de Gastos</th>' +
+                        '<th class="h6">Tipo de Serviço</th>' +
+                        '<th class="h6">Total de Gastos</th>' +
                         '</tr>' +
                         '</thead>' +
                         '<tbody>';
@@ -241,6 +243,8 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
         var mes = tabLink.data('mes'); // Mês
         var ano = tabLink.data('ano'); // Ano
 
+        console.log(tabId, mes, ano);
+
         // Fazer a requisição AJAX
         $.ajax({
             url: '<?php echo base_url('dashboard/dados-por-mes/entrada') ?>',
@@ -251,16 +255,17 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
                 ano: ano
             },
             success: function(response) {
+                console.log(response);
                 // Limpar o conteúdo atual da aba
-                $('#content_entrada_' + tabId).empty();
+                $('#content_entrada_' + mes + '-' + ano).empty();
 
                 // Verificar se há dados retornados
                 if (response.length > 0) {
                     var html = '<table class="table table-striped">' +
                         '<thead>' +
                         '<tr>' +
-                        '<th>Tipo de Serviço</th>' +
-                        '<th>Total de Entradas</th>' +
+                        '<th class="h6">Tipo de Serviço</th>' +
+                        '<th class="h6">Total de Entradas</th>' +
                         '</tr>' +
                         '</thead>' +
                         '<tbody>';
@@ -295,10 +300,10 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
                 }
 
                 // Inserir o HTML construído na aba correspondente
-                $('#content_entrada_' + tabId).html(html);
+                $('#content_entrada_' + mes + '-' + ano).html(html);
             },
             error: function() {
-                $('#content_entrada_' + tabId).html('<p class="text-muted">Erro ao carregar os dados.</p>');
+                $('#content_entrada_' + mes + '-' + ano).html('<p class="text-muted">Erro ao carregar os dados.</p>');
             }
         });
     }

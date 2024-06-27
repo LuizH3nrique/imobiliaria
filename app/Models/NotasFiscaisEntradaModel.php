@@ -80,7 +80,7 @@ class NotasFiscaisEntradaModel extends Model
 
     public function listaGastosPorMes($mes, $ano)
     {
-        return $this->select('tipo_servico, tipo_servico.descricao, SUM(valor) as total_gastos')
+        return $this->select('tipo_servico, tipo_servico.descricao, SUM(valor) as total_entradas')
             ->join('tipo_servico', 'tipo_servico.id = notas_fiscais_entrada.tipo_servico')
             ->where('MONTH(data_pagamento)', $mes)
             ->where('YEAR(data_pagamento)', $ano)
