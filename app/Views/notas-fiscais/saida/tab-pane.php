@@ -86,7 +86,7 @@
                                 <td class="text-start money"><?php echo $item["valor"]; ?></td>
                                 <td class="text-start"><?php echo $item["status_nome"]; ?></td>
                                 <td class="text-start acoes">
-                                    <a type="button" class="btn btn-dark" href="<?php echo base_url('notas-fiscais/view-documento?id=' . $item["documento_fiscal_saida"]); ?>" target="_blank"><i class="fa-solid fa-file-contract" style="color: #63E6BE;"></i></a>
+                                    <a type="button" class="btn btn-dark" href="<?php echo base_url('notas-fiscais/view-documento-saida?id=' . $item["documento_fiscal_saida"]); ?>" target="_blank"><i class="fa-solid fa-file-contract" style="color: #63E6BE;"></i></a>
                                     <a type="button" class="btn btn-dark" href="<?php echo base_url('notas-fiscais/saida/edit?id=' . $item["id"]); ?>"><i class="fa-solid fa-pen-to-square" style="color: #63E6BE;"></i></a>
                                 </td>
                             </tr>

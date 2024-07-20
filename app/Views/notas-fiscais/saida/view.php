@@ -31,7 +31,7 @@
 </head>
 <body>
     <div id="pdf-container">
-        <embed id="pdf-embed" type="application/pdf" src="<?php echo base_url("public/uploads/pdfs/lancamentos/saida/") . $id ?>"/>
+        <embed id="pdf-embed" type="application/pdf" src="<?php echo base_url("public/uploads/pdfs/lancamentos/saida/" . $id) ?>"/>
     </div>
 </body>
 </html>
