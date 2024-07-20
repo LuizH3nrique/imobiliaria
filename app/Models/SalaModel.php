@@ -55,4 +55,9 @@ class SalaModel extends Model
     {
         return $this->where('id', $id)->first();
     }
+
+    public function listSalaPorPredio($predio)
+    {
+        return $this->select()->where('predio', $predio)->findAll();
+    }
 }

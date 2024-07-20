@@ -75,6 +75,11 @@ $routes->get('/notas-fiscais/view-documento-entrada', 'NotasFiscaisController::v
 $routes->get('/notas-fiscais/saida', 'NotasFiscaisController::saida', ['filter' => 'session']);
 $routes->post('/notas-fiscais/saida/save', 'NotasFiscaisController::saveSaida', ['filter' => 'session']);
 $routes->get('/notas-fiscais/view-documento-saida', 'NotasFiscaisController::viewDocumentoSaida', ['filter' => 'session']);
+$routes->get('/notas-fiscais/saida/edit', 'NotasFiscaisController::notasFiscaisSaidaEdit', ['filter' => 'session']);
+$routes->post('/notas-fiscais/saida/update', 'NotasFiscaisController::notasFiscaisSaidaUpdate', ['filter' => 'session']);
+
+//Saida - Buscar Dados por ajax
+$routes->get('/lancamentos/saida/busca-sala-por-predio', 'NotasFiscaisController::buscaSalaPorPredio', ['filter' => 'session']);
 
 // SERVIÇOS
 $routes->get('/servicos/index', 'ServicosController::index', ['filter' => 'session']);

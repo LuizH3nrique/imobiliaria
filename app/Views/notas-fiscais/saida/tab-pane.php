@@ -1,3 +1,37 @@
+<style>
+    .table td {
+        vertical-align: middle;
+        text-align: start;
+    }
+
+    .btn-cicle {
+        padding: 0.25rem 0.5rem;
+    }
+
+    .card-title {
+        margin: 0;
+    }
+
+    .card-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .card-actions p {
+        margin: 0;
+    }
+
+    .acoes {
+        white-space: nowrap;
+    }
+
+    .acoes .btn {
+        display: inline-block;
+        margin-right: 5px;
+        /* Ajuste conforme necessário */
+    }
+</style>
 <div class="tab-content">
     <div class="tab-pane fade" id="account" role="tabpanel">
 
@@ -16,7 +50,7 @@
                 echo form_open_multipart(base_url("notas-fiscais/saida/save"));
                 ?>
                 <div class="row">
-                    <?= $this->include($dirView .'/form') ?>
+                    <?= $this->include($dirView . '/form') ?>
                 </div>
                 <button type="submit" id="buttonSave" class="btn btn-primary">Gerar Lançamento de Saída</button>
                 <?php echo form_close(); ?>
@@ -33,25 +67,28 @@
                 <table class="table" id="tabelaResponsivaDataTable">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Tomador</th>
-                            <th>Prestador</th>
-                            <th>Payment</th>
-                            <th>Valor</th>
-                            <th>Status</th>
-                            <th class="d-none d-md-table-cell">Visualizar</th>
+                            <th scope="col" class="text-start">#</th>
+                            <th scope="col" class="text-start">Tomador</th>
+                            <th scope="col" class="text-start">Prestador</th>
+                            <th scope="col" class="text-start">Payment</th>
+                            <th scope="col" class="text-start">Valor</th>
+                            <th scope="col" class="text-start">Status</th>
+                            <th scope="col" class="text-start">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($notas as $item) : ?>
                             <tr>
-                                <td><?php echo $item["id"]; ?></td>
-                                <td><?php echo $item["nome_empresarial"]; ?></td>
-                                <td><?php echo $item["prestador_nome"]; ?></td>
-                                <td><?php echo $item["tipo_nome"]; ?></td>
-                                <td class="money"><?php echo $item["valor"]; ?></td>
-                                <td><?php echo $item["status_nome"]; ?></td>
-                                <td><a type="button" class="btn btn-primary" href="<?php echo base_url('notas-fiscais/view-documento?id=' . $item["documento_fiscal_saida"]); ?>" target="_blank">ABRIR NOTA FISCAL</a></td>
+                                <td class="text-start"><?php echo $item["id"]; ?></td>
+                                <td class="text-start"><?php echo $item["nome_empresarial"]; ?></td>
+                                <td class="text-start"><?php echo $item["prestador_nome"]; ?></td>
+                                <td class="text-start"><?php echo $item["tipo_nome"]; ?></td>
+                                <td class="text-start money"><?php echo $item["valor"]; ?></td>
+                                <td class="text-start"><?php echo $item["status_nome"]; ?></td>
+                                <td class="text-start acoes">
+                                    <a type="button" class="btn btn-dark" href="<?php echo base_url('notas-fiscais/view-documento?id=' . $item["documento_fiscal_saida"]); ?>" target="_blank"><i class="fa-solid fa-file-contract" style="color: #63E6BE;"></i></a>
+                                    <a type="button" class="btn btn-dark" href="<?php echo base_url('notas-fiscais/saida/edit?id=' . $item["id"]); ?>"><i class="fa-solid fa-pen-to-square" style="color: #63E6BE;"></i></a>
+                                </td>
                             </tr>
                         <?php endforeach
                         ?>

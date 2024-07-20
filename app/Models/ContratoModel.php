@@ -46,7 +46,13 @@ class ContratoModel extends Model
     protected $beforeInsert   = [];
     protected $beforeUpdate   = [];
 
-    public function contratoId($id){
+    public function contratoId($id)
+    {
         return $this->select('*')->where('id', $id)->first();
+    }
+
+    public function listContrato()
+    {
+        return $this->select('*')->findAll();
     }
 }

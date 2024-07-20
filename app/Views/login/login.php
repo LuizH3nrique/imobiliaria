@@ -140,6 +140,76 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <!-- Abas de Entradas -->
+        <div class="col-xl-6 col-xxl-6">
+            <div class="card flex-fill w-100">
+                <div class="card-body py-3">
+                    <!-- Nav tabs para Entradas -->
+                    <ul class="nav nav-tabs entradas-tabs" role="tablist">
+                        <?php if (empty($meses_entradas)) : ?>
+                            <p class="fs-5 m-2 fw-bolder"><i class="fa-solid fa-triangle-exclamation fs-4" style="color: #FFD43B;"></i> Lista de Entradas por Serviço está vazia</p>
+                        <?php else : ?>
+                            <?php foreach ($meses_entradas as $item) : ?>
+                                <li class="nav-item">
+                                    <a class="nav-link <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>" data-toggle="tab" href="#tab_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>" data-mes="<?php echo $item['mes']; ?>" data-ano="<?php echo $item['ano']; ?>">
+                                        <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </ul>
+
+                    <!-- Tab panes para Entradas -->
+                    <div class="tab-content entradas-content">
+                        <?php foreach ($meses_entradas as $item) : ?>
+                            <div id="tab_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>" class="tab-pane fade <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>">
+                                <p class="fs-5 m-2 fw-bolder">Lista de Entradas por Serviço - <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?></p>
+                                <div id="content_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>">
+                                    <!-- Aqui serão carregados os dados via AJAX -->
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Abas de Entradas -->
+        <div class="col-xl-6 col-xxl-6">
+            <div class="card flex-fill w-100">
+                <div class="card-body py-3">
+                    <!-- Nav tabs para Entradas -->
+                    <ul class="nav nav-tabs entradas-tabs" role="tablist">
+                        <?php if (empty($meses_entradas)) : ?>
+                            <p class="fs-5 m-2 fw-bolder"><i class="fa-solid fa-triangle-exclamation fs-4" style="color: #FFD43B;"></i> Lista de Entradas por Serviço está vazia</p>
+                        <?php else : ?>
+                            <?php foreach ($meses_entradas as $item) : ?>
+                                <li class="nav-item">
+                                    <a class="nav-link <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>" data-toggle="tab" href="#tab_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>" data-mes="<?php echo $item['mes']; ?>" data-ano="<?php echo $item['ano']; ?>">
+                                        <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </ul>
+
+                    <!-- Tab panes para Entradas -->
+                    <div class="tab-content entradas-content">
+                        <?php foreach ($meses_entradas as $item) : ?>
+                            <div id="tab_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>" class="tab-pane fade <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>">
+                                <p class="fs-5 m-2 fw-bolder">Lista de Entradas por Serviço - <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?></p>
+                                <div id="content_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>">
+                                    <!-- Aqui serão carregados os dados via AJAX -->
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>

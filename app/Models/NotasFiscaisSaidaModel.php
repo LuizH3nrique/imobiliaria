@@ -18,6 +18,8 @@ class NotasFiscaisSaidaModel extends Model
         'id',
         'tomador_id',
         'prestador_id',
+        'predio_id',
+        'sala_id',
         'payment_id',
         'servico_id',
         'valor',
@@ -49,6 +51,33 @@ class NotasFiscaisSaidaModel extends Model
     public function list()
     {
         return $this->select('notas_fiscais_saida.id, notas_fiscais_saida.documento_fiscal_saida,empresa.nome_empresarial, prestador.nome as prestador_nome, tipo_servico.descricao as servico_nome, payment_tipo.descricao as tipo_nome, valor, payment_status.descricao as status_nome')->join('empresa', 'empresa.id = tomador_id')->join('prestador', 'prestador.id = prestador_id')->join('tipo_servico', 'tipo_servico.id = servico_id')->join('payment_tipo', 'payment_tipo.id = tipo_pagamento')->join('payment_status', 'payment_status.id = payment_status')->findAll();
+    }
+
+    public function listPorId($id)
+    {
+        return $this
+        ->select('
+        notas_fiscais_saida.id, 
+        notas_fiscais_saida.documento_fiscal_saida, 
+        empresa.nome_empresarial,
+        prestador.nome as prestador_nome,
+        predio_id,
+        sala_id,
+        tipo_servico.descricao as servico_nome, 
+        payment_tipo.descricao as tipo_nome, 
+        valor, 
+        data_pagamento,
+        notas_fiscais_saida.descricao,
+        payment_status.descricao as status_nome')
+        ->join('empresa', 'empresa.id = tomador_id')
+        ->join('prestador', 'prestador.id = prestador_id')
+        ->join('tipo_servico', 'tipo_servico.id = servico_id')
+        ->join('payment_tipo', 'payment_tipo.id = tipo_pagamento')
+        ->join('payment_status', 'payment_status.id = payment_status')
+        ->join('predio', 'predio.id = predio_id', 'left')
+        ->join('sala', 'sala.id = sala_id', 'left')
+        ->where('notas_fiscais_saida.id', $id)
+        ->first();
     }
 
     public function sumGastos()
