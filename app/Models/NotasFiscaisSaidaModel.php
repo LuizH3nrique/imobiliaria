@@ -56,7 +56,7 @@ class NotasFiscaisSaidaModel extends Model
     public function listPorId($id)
     {
         return $this
-        ->select('
+            ->select('
         notas_fiscais_saida.id, 
         notas_fiscais_saida.documento_fiscal_saida, 
         empresa.nome_empresarial,
@@ -69,15 +69,15 @@ class NotasFiscaisSaidaModel extends Model
         data_pagamento,
         notas_fiscais_saida.descricao,
         payment_status.descricao as status_nome')
-        ->join('empresa', 'empresa.id = tomador_id')
-        ->join('prestador', 'prestador.id = prestador_id')
-        ->join('tipo_servico', 'tipo_servico.id = servico_id')
-        ->join('payment_tipo', 'payment_tipo.id = tipo_pagamento')
-        ->join('payment_status', 'payment_status.id = payment_status')
-        ->join('predio', 'predio.id = predio_id', 'left')
-        ->join('sala', 'sala.id = sala_id', 'left')
-        ->where('notas_fiscais_saida.id', $id)
-        ->first();
+            ->join('empresa', 'empresa.id = tomador_id')
+            ->join('prestador', 'prestador.id = prestador_id')
+            ->join('tipo_servico', 'tipo_servico.id = servico_id')
+            ->join('payment_tipo', 'payment_tipo.id = tipo_pagamento')
+            ->join('payment_status', 'payment_status.id = payment_status')
+            ->join('predio', 'predio.id = predio_id', 'left')
+            ->join('sala', 'sala.id = sala_id', 'left')
+            ->where('notas_fiscais_saida.id', $id)
+            ->first();
     }
 
     public function sumGastos()
@@ -101,6 +101,7 @@ class NotasFiscaisSaidaModel extends Model
             ->orderBy('data_pagamento', 'ASC')
             ->findAll();
     }
+
 
     // Função para obter o nome do mês em português
     public function obterNomeMes($mesNumero)
@@ -130,6 +131,17 @@ class NotasFiscaisSaidaModel extends Model
             ->where('MONTH(data_pagamento)', $mes)
             ->where('YEAR(data_pagamento)', $ano)
             ->groupBy('servico_id, tipo_servico.descricao')
+            ->findAll();
+    }
+
+    public function listaGastoPorMesPorPredio($mes, $ano)
+    {
+        return $this->select('predio_id, predio.nome, SUM(valor) as total_gastos')
+            ->join('tipo_servico', 'tipo_servico.id = notas_fiscais_saida.servico_id')
+            ->join('predio', 'predio.id = notas_fiscais_saida.predio_id')
+            ->where('MONTH(data_pagamento)', $mes)
+            ->where('YEAR(data_pagamento)', $ano)
+            ->groupBy('predio_id, predio.nome')
             ->findAll();
     }
 }

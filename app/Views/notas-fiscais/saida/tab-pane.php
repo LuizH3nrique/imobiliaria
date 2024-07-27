@@ -90,12 +90,9 @@
                                     <a type="button" class="btn btn-dark" href="<?php echo base_url('notas-fiscais/saida/edit?id=' . $item["id"]); ?>"><i class="fa-solid fa-pen-to-square" style="color: #63E6BE;"></i></a>
                                 </td>
                             </tr>
-                        <?php endforeach
-                        ?>
-
+                        <?php endforeach ?>
                     </tbody>
                 </table>
-
             </div>
         </div>
     </div>

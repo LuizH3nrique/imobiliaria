@@ -143,17 +143,17 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
 
     <div class="row">
         <!-- Abas de Entradas -->
-        <div class="col-xl-6 col-xxl-6">
+        <div class="col-xl-9 col-xxl-9">
             <div class="card flex-fill w-100">
                 <div class="card-body py-3">
                     <!-- Nav tabs para Entradas -->
-                    <ul class="nav nav-tabs entradas-tabs" role="tablist">
+                    <ul class="nav nav-tabs saida-predios-tabs" role="tablist">
                         <?php if (empty($meses_entradas)) : ?>
-                            <p class="fs-5 m-2 fw-bolder"><i class="fa-solid fa-triangle-exclamation fs-4" style="color: #FFD43B;"></i> Lista de Entradas por Serviço está vazia</p>
+                            <p class="fs-5 m-2 fw-bolder"><i class="fa-solid fa-triangle-exclamation fs-4" style="color: #FFD43B;"></i> Lista de Saídas por Prédio está vazia</p>
                         <?php else : ?>
                             <?php foreach ($meses_entradas as $item) : ?>
                                 <li class="nav-item">
-                                    <a class="nav-link <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>" data-toggle="tab" href="#tab_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>" data-mes="<?php echo $item['mes']; ?>" data-ano="<?php echo $item['ano']; ?>">
+                                    <a class="nav-link <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>" data-toggle="tab" href="#tab_saida_predio_<?php echo $item['mes'] . '-' . $item['ano']; ?>" data-mes="<?php echo $item['mes']; ?>" data-ano="<?php echo $item['ano']; ?>">
                                         <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?>
                                     </a>
                                 </li>
@@ -164,9 +164,9 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
                     <!-- Tab panes para Entradas -->
                     <div class="tab-content entradas-content">
                         <?php foreach ($meses_entradas as $item) : ?>
-                            <div id="tab_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>" class="tab-pane fade <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>">
-                                <p class="fs-5 m-2 fw-bolder">Lista de Entradas por Serviço - <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?></p>
-                                <div id="content_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>">
+                            <div id="tab_saida_predio_<?php echo $item['mes'] . '-' . $item['ano']; ?>" class="tab-pane fade <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>">
+                                <p class="fs-5 m-2 fw-bolder">Lista de Entradas por Prédio - <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?></p>
+                                <div id="content_saida_predio_<?php echo $item['mes'] . '-' . $item['ano']; ?>">
                                     <!-- Aqui serão carregados os dados via AJAX -->
                                 </div>
                             </div>
@@ -175,36 +175,29 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
                 </div>
             </div>
         </div>
-
-        <!-- Abas de Entradas -->
-        <div class="col-xl-6 col-xxl-6">
-            <div class="card flex-fill w-100">
-                <div class="card-body py-3">
-                    <!-- Nav tabs para Entradas -->
-                    <ul class="nav nav-tabs entradas-tabs" role="tablist">
-                        <?php if (empty($meses_entradas)) : ?>
-                            <p class="fs-5 m-2 fw-bolder"><i class="fa-solid fa-triangle-exclamation fs-4" style="color: #FFD43B;"></i> Lista de Entradas por Serviço está vazia</p>
-                        <?php else : ?>
-                            <?php foreach ($meses_entradas as $item) : ?>
-                                <li class="nav-item">
-                                    <a class="nav-link <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>" data-toggle="tab" href="#tab_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>" data-mes="<?php echo $item['mes']; ?>" data-ano="<?php echo $item['ano']; ?>">
-                                        <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?>
-                                    </a>
-                                </li>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </ul>
-
-                    <!-- Tab panes para Entradas -->
-                    <div class="tab-content entradas-content">
-                        <?php foreach ($meses_entradas as $item) : ?>
-                            <div id="tab_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>" class="tab-pane fade <?php echo ($item['mes'] == date('n')) ? 'show active' : ''; ?>">
-                                <p class="fs-5 m-2 fw-bolder">Lista de Entradas por Serviço - <?php echo $modelNotaFiscalSaida->obterNomeMes($item['mes']) . ' ' . $item['ano']; ?></p>
-                                <div id="content_entrada_<?php echo $item['mes'] . '-' . $item['ano']; ?>">
-                                    <!-- Aqui serão carregados os dados via AJAX -->
+        <!-- Total de Gastos do Mês Selecionado -->
+        <div class="col-xl-3 col-xxl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col mt-0">
+                            <h5 class="card-title text-danger">Gastos por Prédio</h5>
+                        </div>
+                        <div class="col-auto">
+                            <div class="avatar">
+                                <div class="avatar-title rounded-circle bg-danger">
+                                    <i class="align-middle" data-feather="dollar-sign"></i>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <h1 id="total-gastos-mes" class="display-5 mt-1 mb-3 money">
+                        <h1 class="display-5 mt-1 mb-3 money text-danger" id="valor_gastos_mes_por_predio">
+                            0
+                        </h1>
+                    </h1>
+                    <div class="mb-0">
+                        <span class="text-dark">Total de Gastos do Mês Selecionado</span>
                     </div>
                 </div>
             </div>
@@ -235,6 +228,13 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
             var tabLink = $(this);
             carregarDadosAbaEntradas(tabLink);
         });
+
+        // Evento de clique nas abas de Predios Entrada para carregar os dados via AJAX
+        $('.saida-predios-tabs .nav-link').on('click', function(e) {
+            e.preventDefault();
+            var tabLink = $(this);
+            carregarDadosAbaSaidasPorPredio(tabLink);
+        });
     });
 
     // Função para fazer a requisição AJAX e carregar os dados da aba de Gastos
@@ -243,7 +243,7 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
         var mes = tabLink.data('mes'); // Mês
         var ano = tabLink.data('ano'); // Ano
 
-        console.log(tabId, mes, ano);
+        //console.log(tabId, mes, ano);
 
         // Fazer a requisição AJAX
         $.ajax({
@@ -313,8 +313,6 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
         var mes = tabLink.data('mes'); // Mês
         var ano = tabLink.data('ano'); // Ano
 
-        console.log(tabId, mes, ano);
-
         // Fazer a requisição AJAX
         $.ajax({
             url: '<?php echo base_url('dashboard/dados-por-mes/entrada') ?>',
@@ -374,6 +372,81 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
             },
             error: function() {
                 $('#content_entrada_' + mes + '-' + ano).html('<p class="text-muted">Erro ao carregar os dados.</p>');
+            }
+        });
+    }
+
+    function carregarDadosAbaSaidasPorPredio(tabLink) {
+        var tabId = tabLink.attr('href').replace('#', ''); // ID da aba
+        var mes = tabLink.data('mes'); // Mês
+        var ano = tabLink.data('ano'); // Ano
+
+        console.log(tabId, mes, ano);
+
+        $.ajax({
+            url: '<?php echo base_url('dashboard/dados-por-mes/saida/por-predio') ?>',
+            method: 'GET',
+            dataType: 'json',
+            data: {
+                mes: mes,
+                ano: ano
+            },
+            success: function(response) {
+                console.log(response);
+
+                // Limpar o conteúdo atual da aba
+                $('#content_saida_predio_' + mes + '-' + ano).empty();
+
+                // Formatando o totalEntradasMes como moeda brasileira e exibindo no elemento
+                $('#valor_gastos_mes_por_predio').text('0');
+
+                // Verificar se há dados retornados
+                if (response.length > 0) {
+                    var html = '<table class="table table-striped">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th class="h6">Prédios</th>' +
+                        '<th class="h6">Total de Gastos</th>' +
+                        '<th class="h6">Mais Detalhes</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+
+                    // Iterar sobre os dados recebidos e construir as linhas da tabela
+                    var totalGastosMes = 0;
+                    $.each(response, function(index, item) {
+                        // Formatando o valor como moeda brasileira
+                        var valorFormatado = parseFloat(item.total_gastos).toLocaleString('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL'
+                        });
+
+                        html += '<tr>' +
+                            '<td>' + item.nome + '</td>' +
+                            '<td>' + valorFormatado + '</td>' +
+                            '<td><a type="button" class="btn btn-warning rounded-0">Visualizar</a></td>' +
+                            '</tr>';
+
+                        totalGastosMes += parseFloat(item.total_gastos);
+                    });
+
+                    // Formatando o totalEntradasMes como moeda brasileira e exibindo no elemento
+                    $('#valor_gastos_mes_por_predio').text(totalGastosMes.toLocaleString('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    }));
+
+                    html += '</tbody></table>';
+                } else {
+                    // Se não houver dados, exibir mensagem de nenhum dado encontrado
+                    var html = '<p class="text-muted">Nenhum gasto registrado para este mês.</p>';
+                }
+
+                // Inserir o HTML construído na aba correspondente
+                $('#content_saida_predio_' + mes + '-' + ano).html(html);
+            },
+            error: function() {
+                $('#content_saida_predio_' + mes + '-' + ano).html('<p class="text-muted">Erro ao carregar os dados.</p>');
             }
         });
     }

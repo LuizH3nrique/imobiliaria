@@ -47,18 +47,13 @@ class NotasFiscaisEntradaModel extends Model
     protected $beforeInsert   = [];
     protected $beforeUpdate   = [];
 
-    public function list(){
-        return $this->
-        select('notas_fiscais_entrada.id, notas_fiscais_entrada.documento_fiscal_entrada, empresa.nome_empresarial as empresa_nome, cliente.nome_cliente, tipo_servico.descricao as servico_nome, payment_tipo.descricao as tipo_nome, valor, payment_status.descricao as status_nome')->
-        join('empresa', 'empresa.id = notas_fiscais_entrada.empresa_id', 'left')->
-        join('cliente', 'cliente.id = notas_fiscais_entrada.cliente_id', 'left')->
-        join('tipo_servico', 'tipo_servico.id = notas_fiscais_entrada.tipo_servico', 'left')->
-        join('payment_tipo', 'payment_tipo.id = notas_fiscais_entrada.tipo_pagamento', 'left')->
-        join('payment_status', 'payment_status.id = notas_fiscais_entrada.payment_status', 'left')->
-        findAll();
+    public function list()
+    {
+        return $this->select('notas_fiscais_entrada.id, notas_fiscais_entrada.documento_fiscal_entrada, empresa.nome_empresarial as empresa_nome, cliente.nome_cliente, tipo_servico.descricao as servico_nome, payment_tipo.descricao as tipo_nome, valor, payment_status.descricao as status_nome')->join('empresa', 'empresa.id = notas_fiscais_entrada.empresa_id', 'left')->join('cliente', 'cliente.id = notas_fiscais_entrada.cliente_id', 'left')->join('tipo_servico', 'tipo_servico.id = notas_fiscais_entrada.tipo_servico', 'left')->join('payment_tipo', 'payment_tipo.id = notas_fiscais_entrada.tipo_pagamento', 'left')->join('payment_status', 'payment_status.id = notas_fiscais_entrada.payment_status', 'left')->findAll();
     }
 
-    public function sumEntrada(){
+    public function sumEntrada()
+    {
         return $this->selectSum('valor', 'total_gastos')->first();
     }
 
@@ -87,4 +82,6 @@ class NotasFiscaisEntradaModel extends Model
             ->groupBy('tipo_servico, tipo_servico.descricao')
             ->findAll();
     }
+
+    
 }

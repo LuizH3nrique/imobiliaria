@@ -29,4 +29,15 @@ class DashboardController extends BaseController
 
         return json_encode($data);
     }
+
+    public function dadosPorMesSaidaPorPredio()
+    {
+        $mes = $this->request->getGet('mes');
+        $ano = $this->request->getGet('ano');
+
+        $notaFiscalSaidaModel = new NotasFiscaisSaidaModel();
+        $data = $notaFiscalSaidaModel->listaGastoPorMesPorPredio($mes, $ano);
+
+        return json_encode($data);
+    }
 }
