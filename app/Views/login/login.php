@@ -397,10 +397,9 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
                 // Limpar o conteúdo atual da aba
                 $('#content_saida_predio_' + mes + '-' + ano).empty();
 
-                // Formatando o totalEntradasMes como moeda brasileira e exibindo no elemento
+                // Resetar o valor dos gastos
                 $('#valor_gastos_mes_por_predio').text('0');
 
-                // Verificar se há dados retornados
                 if (response.length > 0) {
                     var html = '<table class="table table-striped">' +
                         '<thead>' +
@@ -412,25 +411,28 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
                         '</thead>' +
                         '<tbody>';
 
-                    // Iterar sobre os dados recebidos e construir as linhas da tabela
                     var totalGastosMes = 0;
+
                     $.each(response, function(index, item) {
-                        // Formatando o valor como moeda brasileira
                         var valorFormatado = parseFloat(item.total_gastos).toLocaleString('pt-BR', {
                             style: 'currency',
                             currency: 'BRL'
                         });
 
+                        var detalheUrl = '<?php echo base_url('dashboard/dados-por-mes/saida/por-predio/view') ?>' +
+                            '?mes=' + encodeURIComponent(mes) +
+                            '&ano=' + encodeURIComponent(ano) +
+                            '&predio=' + encodeURIComponent(item.predio_id);
+
                         html += '<tr>' +
                             '<td>' + item.nome + '</td>' +
                             '<td>' + valorFormatado + '</td>' +
-                            '<td><a type="button" class="btn btn-warning rounded-0">Visualizar</a></td>' +
+                            '<td><a type="button" href="' + detalheUrl + '" class="btn btn-warning rounded-0" target="_blank">Visualizar</a></td>' +
                             '</tr>';
 
                         totalGastosMes += parseFloat(item.total_gastos);
                     });
 
-                    // Formatando o totalEntradasMes como moeda brasileira e exibindo no elemento
                     $('#valor_gastos_mes_por_predio').text(totalGastosMes.toLocaleString('pt-BR', {
                         style: 'currency',
                         currency: 'BRL'
@@ -438,11 +440,9 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
 
                     html += '</tbody></table>';
                 } else {
-                    // Se não houver dados, exibir mensagem de nenhum dado encontrado
-                    var html = '<p class="text-muted">Nenhum gasto registrado para este mês.</p>';
+                    html = '<p class="text-muted">Nenhum gasto registrado para este mês.</p>';
                 }
 
-                // Inserir o HTML construído na aba correspondente
                 $('#content_saida_predio_' + mes + '-' + ano).html(html);
             },
             error: function() {

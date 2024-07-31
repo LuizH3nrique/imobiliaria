@@ -14,6 +14,7 @@ $routes->get('/teste', 'Teste::index', ['filter' => 'session']);
 $routes->get('/dashboard/dados-por-mes/entrada', 'DashboardController::dadosPorMesEntrada', ['filter' => 'session']);
 $routes->get('/dashboard/dados-por-mes/saida', 'DashboardController::dadosPorMesSaida', ['filter' => 'session']);
 $routes->get('/dashboard/dados-por-mes/saida/por-predio', 'DashboardController::dadosPorMesSaidaPorPredio', ['filter' => 'session']);
+$routes->get('/dashboard/dados-por-mes/saida/por-predio/view','DashboardController::viewDadosPorMesSaidaPorPredio', ['filter' => 'session']);
 
 // users
 //$routes->get('/settings', 'SettingController::index', ['filter' => 'session']);

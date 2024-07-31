@@ -50,4 +50,8 @@ class PredioModel extends Model
     public function listPredioId($id){
         return $this->where("id", $id)->first();
     }
+
+    public function getNomePredio($id){
+        return $this->select('nome')->where("id", $id)->first();
+    }
 }

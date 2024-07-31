@@ -67,4 +67,10 @@ class EmpresaModel extends Model
     {
         return $this->select('id, nome_empresarial')->findAll();
     }
+
+    public function listNomeEmpresa($id)
+    {
+        return $this->select('nome_empresarial')->where('empresa.id', $id)->first();
+    }
+
 }

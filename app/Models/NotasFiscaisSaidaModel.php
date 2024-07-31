@@ -144,4 +144,41 @@ class NotasFiscaisSaidaModel extends Model
             ->groupBy('predio_id, predio.nome')
             ->findAll();
     }
+
+    public function listaGastoPorMesPorPredioView($mes, $ano, $predio)
+    {
+        return $this->select('notas_fiscais_saida.id, predio_id, predio.nome, valor, tipo_servico.descricao as servico_nome, payment_tipo.descricao as pagamento_nome, empresa.nome_empresarial, prestador.nome as prestador_nome, data_pagamento')
+            ->join('tipo_servico', 'tipo_servico.id = notas_fiscais_saida.servico_id')
+            ->join('predio', 'predio.id = notas_fiscais_saida.predio_id')
+            ->join('empresa', 'empresa.id = notas_fiscais_saida.tomador_id')
+            ->join('prestador', 'prestador.id = notas_fiscais_saida.prestador_id')
+            ->join('payment_tipo', 'payment_tipo.id = notas_fiscais_saida.tipo_pagamento')
+            ->where('predio_id', $predio)
+            ->where('MONTH(data_pagamento)', $mes)
+            ->where('YEAR(data_pagamento)', $ano)
+            ->findAll();
+    }
+
+    public function listaGastoPorMesAnteriorPorPredioView($mes, $ano, $predio)
+    {
+        // Ajustar o mês e ano para obter o mês anterior
+        if ($mes == 1) {
+            $mesAnterior = 12;
+            $anoAnterior = $ano - 1;
+        } else {
+            $mesAnterior = $mes - 1;
+            $anoAnterior = $ano;
+        }
+
+        return $this->select('notas_fiscais_saida.id, predio_id, predio.nome, valor, tipo_servico.descricao as servico_nome, payment_tipo.descricao as pagamento_nome, empresa.nome_empresarial, prestador.nome as prestador_nome, data_pagamento')
+            ->join('tipo_servico', 'tipo_servico.id = notas_fiscais_saida.servico_id')
+            ->join('predio', 'predio.id = notas_fiscais_saida.predio_id')
+            ->join('empresa', 'empresa.id = notas_fiscais_saida.tomador_id')
+            ->join('prestador', 'prestador.id = notas_fiscais_saida.prestador_id')
+            ->join('payment_tipo', 'payment_tipo.id = notas_fiscais_saida.tipo_pagamento')
+            ->where('predio_id', $predio)
+            ->where('MONTH(data_pagamento)', $mesAnterior)
+            ->where('YEAR(data_pagamento)', $anoAnterior)
+            ->findAll();
+    }
 }
