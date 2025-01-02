@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ContratoModel;
+use App\Models\EmpresaModel;
 use App\Models\NotasFiscaisEntradaModel;
 use App\Models\NotasFiscaisSaidaModel;
 use App\Models\UsuarioModel;
@@ -12,6 +13,10 @@ class LoginController extends BaseController
 {
     public function index()
     {
+        // repaginada na tela principal
+        $empresaModel = new EmpresaModel();
+        $data['empresa'] = $empresaModel->populaEmpresaSelect();
+        // repaginada na tela principal
         $notaFiscalSaida = new NotasFiscaisSaidaModel();
         $data['gastos'] = $notaFiscalSaida->sumGastos();
 

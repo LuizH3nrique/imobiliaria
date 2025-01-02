@@ -129,6 +129,22 @@
 							<li class="sidebar-item"><a class='sidebar-link' href='/pages-blank'>Blank Page</a></li> -->
 						</ul>
 					</li>
+					<li class="sidebar-item">
+						<a data-bs-target="#registro-ponto" data-bs-toggle="collapse" class="sidebar-link collapsed">
+							<i class="align-middle me-2 fas fa-fw fa-solid fa-users-rectangle"></i> <span class="align-middle">Área de Ponto</span>
+						</a>
+						<ul id="registro-ponto" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+							<li class="sidebar-item"><a class='sidebar-link' href='<?= base_url('registro-ponto/index') ?>'>Registro de Ponto</a></li>
+						</ul>
+					</li>
+					<li class="sidebar-item">
+						<a data-bs-target="#funcionario" data-bs-toggle="collapse" class="sidebar-link collapsed">
+							<i class="align-middle me-2 fas fa-fw fa-solid fa-user"></i> <span class="align-middle">Funcionários</span>
+						</a>
+						<ul id="funcionario" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+							<li class="sidebar-item"><a class='sidebar-link' href='<?= base_url('funcionario/index') ?>'>Gerenciar Funcionários</a></li>
+						</ul>
+					</li>
 					<!-- <li class="sidebar-item">
 						<a data-bs-target="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed">
 							<i class="align-middle me-2 fas fa-fw fa-sign-in-alt"></i> <span class="align-middle">Auth</span>
@@ -536,85 +552,85 @@
 		});
 
 
-		
-        $(document).ready(function() {
-            $('.date').mask('00/00/0000');
-            $('.time').mask('00:00:00');
-            $('.date_time').mask('00/00/0000 00:00:00');
-            $('.cep').mask('00000-000');
-            $('.phone').mask('0000-0000');
-            $('.telefone').mask('(00) 0 0000-0000');
-            $('.phone_us').mask('(000) 000-0000');
-            $('.mixed').mask('AAA 000-S0S');
-            $('.cpf').mask('000.000.000-00', {
-                reverse: true
-            });
-            $('.cnpj').mask('00.000.000/0000-00', {
-                reverse: true
-            });
-            $('.money').mask('000.000.000.000.000,00', {
-                reverse: true
-            });
-            $('.money2').mask("#.##0,00", {
-                reverse: true
-            });
 
-            $('.money-prefix').mask("000.000.000.000.000,00", {
-                reverse: true
-            });
+		$(document).ready(function() {
+			$('.date').mask('00/00/0000');
+			$('.time').mask('00:00:00');
+			$('.date_time').mask('00/00/0000 00:00:00');
+			$('.cep').mask('00000-000');
+			$('.phone').mask('0000-0000');
+			$('.telefone').mask('(00) 0 0000-0000');
+			$('.phone_us').mask('(000) 000-0000');
+			$('.mixed').mask('AAA 000-S0S');
+			$('.cpf').mask('000.000.000-00', {
+				reverse: true
+			});
+			$('.cnpj').mask('00.000.000/0000-00', {
+				reverse: true
+			});
+			$('.money').mask('000.000.000.000.000,00', {
+				reverse: true
+			});
+			$('.money2').mask("#.##0,00", {
+				reverse: true
+			});
 
-            // Adicionar o prefixo "R$" ao campo de entrada
-            $('.money-prefix').on('focus', function() {
-                if ($(this).val() === '') {
-                    $(this).val('R$ ');
-                }
-            });
+			$('.money-prefix').mask("000.000.000.000.000,00", {
+				reverse: true
+			});
 
-            $('.money-prefix').on('blur', function() {
-                if ($(this).val() === 'R$ ') {
-                    $(this).val('');
-                }
-            });
+			// Adicionar o prefixo "R$" ao campo de entrada
+			$('.money-prefix').on('focus', function() {
+				if ($(this).val() === '') {
+					$(this).val('R$ ');
+				}
+			});
 
-            // Manter o prefixo "R$" ao formatar o campo de entrada
-            $('.money-prefix').on('input', function() {
-                var value = $(this).val();
-                if (!value.startsWith('R$ ')) {
-                    $(this).val('R$ ' + value.replace(/[^0-9,]/g, ''));
-                }
-            });
+			$('.money-prefix').on('blur', function() {
+				if ($(this).val() === 'R$ ') {
+					$(this).val('');
+				}
+			});
 
-            $('.ip_address').mask('0ZZ.0ZZ.0ZZ.0ZZ', {
-                translation: {
-                    'Z': {
-                        pattern: /[0-9]/,
-                        optional: true
-                    }
-                }
-            });
-            $('.ip_address').mask('099.099.099.099');
-            $('.percent').mask('##0,00%', {
-                reverse: true
-            });
-            $('.clear-if-not-match').mask("00/00/0000", {
-                clearIfNotMatch: true
-            });
-            $('.placeholder').mask("00/00/0000", {
-                placeholder: "__/__/____"
-            });
-            $('.fallback').mask("00r00r0000", {
-                translation: {
-                    'r': {
-                        pattern: /[\/]/,
-                        fallback: '/'
-                    },
-                    placeholder: "__/__/____"
-                }
-            });
-            $('.selectonfocus').mask("00/00/0000", {
-                selectOnFocus: true
-            });
-        });
+			// Manter o prefixo "R$" ao formatar o campo de entrada
+			$('.money-prefix').on('input', function() {
+				var value = $(this).val();
+				if (!value.startsWith('R$ ')) {
+					$(this).val('R$ ' + value.replace(/[^0-9,]/g, ''));
+				}
+			});
+
+			$('.ip_address').mask('0ZZ.0ZZ.0ZZ.0ZZ', {
+				translation: {
+					'Z': {
+						pattern: /[0-9]/,
+						optional: true
+					}
+				}
+			});
+			$('.ip_address').mask('099.099.099.099');
+			$('.percent').mask('##0,00%', {
+				reverse: true
+			});
+			$('.clear-if-not-match').mask("00/00/0000", {
+				clearIfNotMatch: true
+			});
+			$('.placeholder').mask("00/00/0000", {
+				placeholder: "__/__/____"
+			});
+			$('.fallback').mask("00r00r0000", {
+				translation: {
+					'r': {
+						pattern: /[\/]/,
+						fallback: '/'
+					},
+					placeholder: "__/__/____"
+				}
+			});
+			$('.selectonfocus').mask("00/00/0000", {
+				selectOnFocus: true
+			});
+		});
 	</script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

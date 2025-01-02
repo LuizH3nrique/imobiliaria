@@ -99,4 +99,14 @@ class PredioController extends BaseController
         $predioModel = new PredioModel();
         $predioModel->set($data)->where('id', $id)->update();
     }
+
+    public function listarPredioPorEmpresa()
+    {
+        $id = $this->request->getGet('id');
+
+        $predioModel = new PredioModel();
+        $data = $predioModel->listaPredioPorEmpresa($id);
+
+        return json_encode($data);
+    }
 }

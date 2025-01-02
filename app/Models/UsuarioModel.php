@@ -21,6 +21,8 @@ class UsuarioModel extends Model
         'cpf',
         'rg',
         'status',
+        'supervisor',
+        'supervisor_senha',
         'status_message',
         'active',
         'last_active',
@@ -52,5 +54,22 @@ class UsuarioModel extends Model
         } else {
             return $this->where('deleted_at', null)->findAll();
         }
+    }
+
+    public function lista_usuarios(){
+        return $this->select('id, username')->findAll();
+    }
+
+    public function verifica_supervisor($supervisor)
+    {
+        $data = $this->select()->where('id', $supervisor)->where('supervisor !=', null)->first();
+
+        return !empty($data);
+    }
+
+    public function validar_senha($id, $senha){
+        $data = $this->where('id', $id)->where('supervisor_senha', $senha)->first();
+
+        return !empty($data);
     }
 }

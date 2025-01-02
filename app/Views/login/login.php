@@ -12,7 +12,43 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
             Bem-vindo, <?php echo auth()->user()->username; ?>
         </h1>
     </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <select class="form-select" name="empresa" id="empresa_select" onchange="procurarPredioPorEmpresa(this)">
+                                <option disabled selected>Selecione uma empresa</option>
+                                <?php foreach ($empresa as $item) : ?>
+                                    <option class="text-uppercase" value="<?= $item['id'] ?>"><?= $item['nome_empresarial'] ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" name="predio" id="predio_select" onchange="procurarSalaPorPredio(this)" disabled>
+                                <option disabled selected>Selecione um prédio</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" name="sala" id="sala_select" disabled>
+                                <option disabled selected>Selecione uma sala</option>
+                                <?php foreach ($empresa as $item) : ?>
+                                    <option class="text-uppercase" value="<?= $item['id'] ?>"><?= $item['nome_empresarial'] ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
 
+                </div>
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <!-- Abas de Entradas -->
         <div class="col-xl-9 col-xxl-9">
@@ -204,6 +240,8 @@ $modelNotaFiscalSaida = new NotasFiscaisSaidaModel;
         </div>
     </div>
 </div>
+
+<?= $this->include('Views/login/empresaController') ?>
 
 <script>
     $(document).ready(function() {

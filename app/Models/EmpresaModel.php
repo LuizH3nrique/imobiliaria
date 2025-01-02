@@ -53,6 +53,10 @@ class EmpresaModel extends Model
     protected $beforeInsert   = [];
     protected $beforeUpdate   = [];
 
+    public function populaEmpresaSelect() {
+        return $this->select('*')->findAll();
+    }
+
     public function readCompany()
     {
         return $this->select('*')->where('deleted_at', null)->findAll();

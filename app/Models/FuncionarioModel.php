@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PredioModel extends Model
+class FuncionarioModel extends Model
 {
     protected $DBGroup          = "default";
-    protected $table            = 'predio';
+    protected $table            = 'funcionario';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
@@ -15,17 +15,10 @@ class PredioModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'id',
-        'predio',
         'nome',
-        'logradouro',
-        'numero',
-        'complemento',
-        'cep',
-        'bairro',
-        'municipio',
-        'uf',
-        'situacao_cadastral',
+        'cpf',
+        'email',
+        'deleted_at'
     ];
 
     // Dates
@@ -43,20 +36,30 @@ class PredioModel extends Model
     protected $beforeInsert   = [];
     protected $beforeUpdate   = [];
 
-    public function listPredio()
+    public function listar_funcionarios()
     {
-        return $this->where("deleted_at", null)->findAll();
+        return $this->select('*')->findAll();
     }
 
-    public function listPredioId($id){
-        return $this->where("id", $id)->first();
+    public function consultar_funcionario_por_id($id)
+    {
+        return $this->where('id', $id)->first();
     }
 
-    public function getNomePredio($id){
-        return $this->select('nome')->where("id", $id)->first();
-    }
+    public function verificar_cpf_do_funcionario($cpf)
+    {
+        $data = $this->where('cpf', $cpf)->first();
 
-    public function listaPredioPorEmpresa($empresa){
-        return $this->select('*')->where('empresa', $empresa)->findAll();
+        if (!empty($data)) {
+            return [
+                'status' => true,
+                'data' => $data
+            ];
+        }
+
+        return [
+            'status' => false,
+            'data' => null
+        ];
     }
 }

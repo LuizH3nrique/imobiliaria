@@ -14,7 +14,9 @@ $routes->get('/teste', 'Teste::index', ['filter' => 'session']);
 $routes->get('/dashboard/dados-por-mes/entrada', 'DashboardController::dadosPorMesEntrada', ['filter' => 'session']);
 $routes->get('/dashboard/dados-por-mes/saida', 'DashboardController::dadosPorMesSaida', ['filter' => 'session']);
 $routes->get('/dashboard/dados-por-mes/saida/por-predio', 'DashboardController::dadosPorMesSaidaPorPredio', ['filter' => 'session']);
-$routes->get('/dashboard/dados-por-mes/saida/por-predio/view','DashboardController::viewDadosPorMesSaidaPorPredio', ['filter' => 'session']);
+$routes->get('/dashboard/dados-por-mes/saida/por-predio/view', 'DashboardController::viewDadosPorMesSaidaPorPredio', ['filter' => 'session']);
+$routes->get('/predio/listar-predio-por-empresa', 'PredioController::listarPredioPorEmpresa');
+
 
 // users
 //$routes->get('/settings', 'SettingController::index', ['filter' => 'session']);
@@ -94,5 +96,23 @@ $routes->get('/prestador/index', 'PrestadorController::index', ['filter' => 'ses
 $routes->post('/prestador/save', 'PrestadorController::save', ['filter' => 'session']);
 $routes->get('/prestador/edit', 'PrestadorController::edit', ['filter' => 'session']);
 $routes->post('/prestador/edit/save', 'PrestadorController::editSave', ['filter' => 'session']);
+
+
+// AREA DE REGISTRO DE PONTO
+$routes->get('registro-ponto/index', 'RegistroPontoController::index', ['filter' => 'session']);
+$routes->post('registro-ponto/registrar', 'RegistroPontoController::registrar', ['filter' => 'session']);
+$routes->get('registro-ponto/listar-predio-por-empresa', 'PredioController::listarPredioPorEmpresa', ['filter' => 'session']);
+
+// SUPERVISOR
+$routes->get('supervisor/verifica-supervisor', 'SupervisorController::verifica_supervisor', ['filter' => 'session']);
+$routes->get('supervisor/validar-senha', 'SupervisorController::validar_senha', ['filter' => 'session']);
+
+// FUNCIONÁRIO
+$routes->get('funcionario/index', 'FuncionarioController::index', ['filter' => 'session']);
+$routes->get('funcionario/verificar-cpf', 'FuncionarioController::verificar_cpf', ['filter' => 'session']);
+$routes->get('funcionario/cadastrar', 'FuncionarioController::formulario_cadastro', ['filter' => 'session']);
+$routes->post('funcionario/cadastrar', 'FuncionarioController::cadastrar', ['filter' => 'session']);
+$routes->get('funcionario/editar', 'FuncionarioController::formulario_editar', ['filter' => 'session']);
+$routes->post('funcionario/editar', 'FuncionarioController::editar', ['filter' => 'session']);
 
 service('auth')->routes($routes);
