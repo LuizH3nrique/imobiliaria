@@ -26,51 +26,6 @@
     }
 </style>
 
-<style>
-    .spinner {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        /* Fundo semitransparente */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        /* Certifique-se de que está acima de todos os elementos */
-    }
-
-    .spinner div {
-        border: 4px solid #f3f3f3;
-        /* Cor do spinner */
-        border-top: 4px solid #3498db;
-        /* Cor da borda animada */
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-    }
-
-    .spinner p {
-        margin-top: 10px;
-        color: #fff;
-        font-size: 16px;
-        text-align: center;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-</style>
-
 <div class="container mt-4">
     <div class="row">
         <!-- Coluna da Câmera -->
@@ -350,19 +305,4 @@
             toastr.error("Geolocalização não é suportada neste navegador.");
         }
     });
-</script>
-<script>
-    function showSpinner(message = "Aguarde...") {
-        const spinner = document.createElement("div");
-        spinner.className = "spinner";
-        spinner.innerHTML = `<div></div><p>${message}</p>`;
-        document.body.appendChild(spinner);
-    }
-
-    function hideSpinner() {
-        const spinner = document.querySelector(".spinner");
-        if (spinner) {
-            spinner.remove();
-        }
-    }
 </script>

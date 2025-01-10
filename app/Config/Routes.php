@@ -102,6 +102,8 @@ $routes->post('/prestador/edit/save', 'PrestadorController::editSave', ['filter'
 $routes->get('registro-ponto/index', 'RegistroPontoController::index', ['filter' => 'session']);
 $routes->post('registro-ponto/registrar', 'RegistroPontoController::registrar', ['filter' => 'session']);
 $routes->get('registro-ponto/listar-predio-por-empresa', 'PredioController::listarPredioPorEmpresa', ['filter' => 'session']);
+$routes->get('registro-ponto/consultar-registros', 'RegistroPontoController::consultar', ['filter' => 'session']);
+$routes->get('registro-ponto/consultar-registros/detalhes', 'RegistroPontoController::consultar_detalhes', ['filter' => 'session']);
 
 // SUPERVISOR
 $routes->get('supervisor/verifica-supervisor', 'SupervisorController::verifica_supervisor', ['filter' => 'session']);

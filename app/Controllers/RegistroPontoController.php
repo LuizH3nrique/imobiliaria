@@ -93,4 +93,25 @@ class RegistroPontoController extends BaseController
             }
         }
     }
+
+    public function consultar()
+    {
+        $registro_ponto_model = new RegistroPontoModel();
+        $data['registro_ponto'] = $registro_ponto_model->listar_registro_ponto()->paginate(10);
+        $data['pager'] = $registro_ponto_model->pager;
+
+        $data['content'] = view('registro-ponto/consultar', $data);
+
+        return view('layouts/template_padrao', $data);
+    }
+
+    public function consultar_detalhes()
+    {
+        $id = $this->request->getGet('id');
+
+        $registro_ponto_model = new RegistroPontoModel();
+        $data = $registro_ponto_model->consultar_registro_por_id($id);
+
+        return json_encode($data);
+    }
 }

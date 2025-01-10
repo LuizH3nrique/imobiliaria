@@ -12,11 +12,17 @@
 
 	<title>IMOBI - DOHNCODE</title>
 
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="<?php echo base_url('public/themes/dist/js/app.js') ?>"></script>
 	<link href="<?php echo base_url('public/themes/dist/css/modern.css') ?>" rel="stylesheet">
 	<!-- Seus estilos, scripts, meta tags, etc. aqui -->
+
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 	<!-- MASK jquery-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -72,6 +78,51 @@
 	/* Aplicar a fonte a todos os outros textos */
 	body {
 		font-family: 'Montserrat', sans-serif;
+	}
+</style>
+
+<style>
+	.spinner {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5);
+		/* Fundo semitransparente */
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 9999;
+		/* Certifique-se de que está acima de todos os elementos */
+	}
+
+	.spinner div {
+		border: 4px solid #f3f3f3;
+		/* Cor do spinner */
+		border-top: 4px solid #3498db;
+		/* Cor da borda animada */
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
+		animation: spin 1s linear infinite;
+	}
+
+	.spinner p {
+		margin-top: 10px;
+		color: #fff;
+		font-size: 16px;
+		text-align: center;
+	}
+
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 </style>
 
@@ -135,6 +186,7 @@
 						</a>
 						<ul id="registro-ponto" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
 							<li class="sidebar-item"><a class='sidebar-link' href='<?= base_url('registro-ponto/index') ?>'>Registro de Ponto</a></li>
+							<li class="sidebar-item"><a class='sidebar-link' href='<?= base_url('registro-ponto/consultar-registros') ?>'>Consultar Registros</a></li>
 						</ul>
 					</li>
 					<li class="sidebar-item">
@@ -382,7 +434,21 @@
 			</symbol>
 		</defs>
 	</svg>
+	<script>
+		function showSpinner(message = "Aguarde...") {
+			const spinner = document.createElement("div");
+			spinner.className = "spinner";
+			spinner.innerHTML = `<div></div><p>${message}</p>`;
+			document.body.appendChild(spinner);
+		}
 
+		function hideSpinner() {
+			const spinner = document.querySelector(".spinner");
+			if (spinner) {
+				spinner.remove();
+			}
+		}
+	</script>
 	<script>
 		$(document).ready(function() {
 			toastr.options = {
