@@ -27,7 +27,7 @@ class Database extends Config
 
     public $default = [
         'DSN'      => '',
-        'hostname' => '154.56.48.204',
+        'hostname' => 'srv1077.hstgr.io',
         'username' => 'u139152663_dhc_academia',
         'password' => 'NTATqi$P9o!',
         'database' => 'u139152663_dhc_academia',

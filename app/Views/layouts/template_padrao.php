@@ -34,9 +34,11 @@
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 	<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
-	<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+	<!-- CSS do DataTables -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
 
+	<!-- JS do DataTables -->
+	<script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
 
 </head>
 <style>
@@ -63,6 +65,19 @@
 		font-weight: bold;
 	}
 
+	.card-header {
+		background-color: #f8f9fa;
+		border-top: 1px solid #ddd;
+		border-bottom: 1px solid #ddd;
+		border-radius: 0 0 12px 12px;
+	}
+
+	.card-footer {
+		background-color: #f8f9fa;
+		border-top: 1px solid #ddd;
+		border-radius: 0 0 12px 12px;
+	}
+
 	label {
 		font-family: 'Montserrat', sans-serif;
 		font-size: 13px;
@@ -78,6 +93,12 @@
 	/* Aplicar a fonte a todos os outros textos */
 	body {
 		font-family: 'Montserrat', sans-serif;
+	}
+
+	/* Tornar todos os botões com bordas arredondadas */
+	button {
+		border-radius: 1rem;
+		/* 1rem para bordas arredondadas mais suaves */
 	}
 </style>
 

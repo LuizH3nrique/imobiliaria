@@ -8,13 +8,13 @@
             <div><a href="<?= base_url('funcionario/cadastrar') ?>" class="btn btn-success rounded-1">Cadastrar</a></div>
         </div>
         <div class="card-body">
-            <table class="table table-striped">
+            <table id="dataTable" class="table" style="width:100%">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th style="width:40%;">Nome</th>
-                        <th style="width:25%">CPF</th>
-                        <th class="d-none d-md-table-cell">E-mail</th>
+                        <th>Nome</th>
+                        <th>CPf</th>
+                        <th>E-mail</th>
                         <th>Ação</th>
                     </tr>
                 </thead>
@@ -26,8 +26,8 @@
                             <td class="cpf"><?= $item['cpf'] ?></td>
                             <td><?= $item['email'] ?></td>
                             <td class="table-action">
-                                <a href="<?= base_url('funcionario/editar?id=' . $item['id']) ?>"><i class="align-middle fas fa-fw fa-pen"></i></a>
-                                <a href="#"><i class="align-middle fas fa-fw fa-trash"></i></a>
+                                <a href="<?= base_url('funcionario/editar?id=' . $item['id']) ?>"><i class="align-middle fas fa-lg fa-fw fa-pen"></i></a>
+                                <a href="#"><i class="align-middle fas fa-lg fa-fw fa-trash"></i></a>
                             </td>
                         </tr>
                     <?php endforeach ?>
@@ -36,3 +36,14 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#dataTable').DataTable({
+            responsive: true,
+            "columnDefs": [{
+                "targets": "_all", // Aplica a todas as colunas
+                "className": "text-left" // Usa uma classe CSS para alinhar
+            }]
+        });
+    });
+</script>

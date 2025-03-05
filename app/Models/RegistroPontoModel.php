@@ -68,7 +68,9 @@ class RegistroPontoModel extends Model
             ->join('predio', 'predio.id = registro_ponto.predio_id')
             ->join('users as supervisor_entrada', 'supervisor_entrada.id = registro_ponto.supervisor_entrada')
             ->join('users as supervisor_saida', 'supervisor_saida.id = registro_ponto.supervisor_saida', 'left')
-            ->orderBy('id', 'DESC');
+            ->where('registro_ponto.deleted_at', null)
+            ->orderBy('id', 'DESC')
+            ->findAll();
     }
 
     public function verificar_se_funcionario_ja_registrou($data)
@@ -126,5 +128,48 @@ class RegistroPontoModel extends Model
             ->join('users as supervisor_entrada', 'supervisor_entrada.id = registro_ponto.supervisor_entrada')
             ->join('users as supervisor_saida', 'supervisor_saida.id = registro_ponto.supervisor_saida', 'left')
             ->first();
+    }
+
+    public function filtroRegistrosDePonto($filtro)
+    {
+        $this->select('
+            registro_ponto.id,
+            registro_ponto.created_at,
+            registro_ponto.updated_at,
+            registro_ponto.foto_entrada,
+            registro_ponto.foto_saida,
+            registro_ponto.localizacao_lat_entrada,
+            registro_ponto.localizacao_log_entrada,
+            registro_ponto.localizacao_lat_saida,
+            registro_ponto.localizacao_log_saida,
+            funcionario.id as funcionario_id,
+            funcionario.nome as funcionario_nome,
+            funcionario.cpf as funcionario_cpf,
+            predio.id as predio_id,
+            predio.nome as predio_nome,
+            supervisor_entrada.nome as supervisor_entrada_nome,
+            supervisor_saida.nome as supervisor_saida_nome
+            ')
+            ->join('funcionario', 'funcionario.id = registro_ponto.funcionario_id')
+            ->join('predio', 'predio.id = registro_ponto.predio_id')
+            ->join('users as supervisor_entrada', 'supervisor_entrada.id = registro_ponto.supervisor_entrada')
+            ->join('users as supervisor_saida', 'supervisor_saida.id = registro_ponto.supervisor_saida', 'left')
+            ->where('registro_ponto.deleted_at', null);
+
+        foreach ($filtro as $campo => $valor) {
+            if (!empty($valor)) {
+                if ($campo == 'funcionario_nome') {
+                    $this->like('funcionario.nome', $valor);
+                } elseif ($campo == 'predio') {
+                    $this->like('predio.nome', $valor);
+                } elseif ($campo == 'data') {
+                    $this->where('DATE(registro_ponto.created_at)', $valor);
+                } else {
+                    $this->where($campo, $valor);
+                }
+            }
+        }
+
+        return $this->orderBy('id', 'DESC')->findAll();
     }
 }

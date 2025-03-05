@@ -55,4 +55,8 @@ class ContratoModel extends Model
     {
         return $this->select('*')->findAll();
     }
+
+    public function soma_dos_contratos() {
+        return $this->select('SUM(valor_contrato) as valor_arrecadado')->first();
+    }
 }

@@ -16,6 +16,15 @@ class LoginController extends BaseController
         // repaginada na tela principal
         $empresaModel = new EmpresaModel();
         $data['empresa'] = $empresaModel->populaEmpresaSelect();
+
+        // Valor dos contratos no mes
+        $contrato_model = new ContratoModel();
+        $valor = $contrato_model->soma_dos_contratos();
+        $valor_formatado = 'R$ ' . number_format(floatval(str_replace(',', '.', $valor['valor_arrecadado'])), 2, ',', '.');
+        $data['valor_mes'] = $valor_formatado;
+
+        $data['valor_ano'] = 'R$ ' . number_format(floatval(str_replace(',', '.', $valor['valor_arrecadado'] * 12)), 2, ',', '.');
+
         // repaginada na tela principal
         $notaFiscalSaida = new NotasFiscaisSaidaModel();
         $data['gastos'] = $notaFiscalSaida->sumGastos();

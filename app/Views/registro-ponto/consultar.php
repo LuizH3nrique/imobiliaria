@@ -1,26 +1,4 @@
 <style>
-    .card-footer {
-        background-color: #f8f9fa;
-        border-top: 1px solid #ddd;
-        text-align: center;
-        border-radius: 0 0 12px 12px;
-    }
-
-    .btn-transparent {
-        background: transparent;
-        border: 1px solid #007bff;
-        color: #007bff;
-        border-radius: 5px;
-        padding: 6px 12px;
-        font-size: 0.875rem;
-        transition: all 0.3s ease;
-    }
-
-    .btn-transparent:hover {
-        background-color: #007bff;
-        color: #fff;
-    }
-
     .modal-content {
         border-radius: 12px;
         border: none;
@@ -86,14 +64,40 @@
 </style>
 
 <div class="container my-5">
+    <div class="card">
+        <form action="<?= base_url('registro-ponto/consultar-registros/filtro') ?>" method="get">
+            <div class="card-header">
+                <h2>Pesquisar</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <label for="nome">Nome</label>
+                        <input type="text" class="form-control" name="nome" id="nome" placeholder="Digite o nome">
+                    </div>
+                    <div class="col">
+                        <label for="predio">Prédio</label>
+                        <input type="text" class="form-control" name="predio" id="predio" placeholder="Digite o nome do prédio">
+                    </div>
+                    <div class="col">
+                        <label for="data">Data</label>
+                        <input type="date" class="form-control" name="data" id="data" placeholder="Selecione a data">
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-info" type="submit">Pesquisar</button>
+            </div>
+        </form>
+    </div>
     <div class="card shadow-sm">
         <div class="card-header">
-            <h1 class="mb-4">Registro de Ponto</h1>
+            <h2 class="p-2">Registro de Ponto</h2>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-12">
-                    <table class="table table-striped" style="font-size: 90%;">
+                    <table id="dataTable" class="table table-striped" style="font-size: 90%;">
                         <thead class="thead-light">
                             <tr>
                                 <th>#</th>
@@ -104,7 +108,7 @@
                                 <th>Entrada</th>
                                 <th>Saída</th>
                                 <th>Horas Trabalhadas</th>
-                                <th></th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -130,14 +134,10 @@
                                         ?>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-visualizar" onclick="viewDetails(<?= $item['id'] ?>)" data-bs-toggle="modal" data-bs-target="#modalRegistro">
-                                            Visualizar
-                                        </button>
-                                        <!-- Botão de Visualizar -->
-                                        <!-- <button class="" data-id="<?php //echo $item['id']; 
-                                                                        ?>" >
-
-                                        </button> -->
+                                        <a class="btn btn-sm btn-primary" onclick="viewDetails(<?= $item['id'] ?>)" data-bs-toggle="modal" data-bs-target="#modalRegistro">
+                                            <i class="fas fa-search"></i>
+                                        </a>
+                                        <a class="btn btn-sm bg-danger" href="<?= base_url('registro-ponto/delete/' . $item['id']) ?>" onclick="return confirmDelete()"><i class="fa-solid fa-trash" style="color: white;"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -192,13 +192,19 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer">
-            <?= $pager->links() ?>
-        </div>
     </div>
 </div>
 
 <script>
+    $(document).ready(function() {
+        $('#dataTable').DataTable();
+    });
+
+    function confirmDelete() {
+        // Pergunta ao usuário se ele tem certeza que deseja excluir
+        return confirm('Tem certeza que deseja excluir?');
+    }
+
     function viewDetails(id) {
         // Mostrar o spinner de carregamento
         showSpinner("Buscando as informações...");
@@ -310,5 +316,5 @@
 
         const locationModal = new bootstrap.Modal(document.getElementById('locationModal'));
         locationModal.show();
-    } 
+    }
 </script>

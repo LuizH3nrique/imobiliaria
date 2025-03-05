@@ -9,6 +9,13 @@ use App\Models\UsuarioModel;
 
 class RegistroPontoController extends BaseController
 {
+    protected $registroPontoModel;
+
+    public function __construct()
+    {
+        $this->registroPontoModel = new RegistroPontoModel();
+    }
+
     public function index()
     {
         $empresa_model = new EmpresaModel();
@@ -97,8 +104,7 @@ class RegistroPontoController extends BaseController
     public function consultar()
     {
         $registro_ponto_model = new RegistroPontoModel();
-        $data['registro_ponto'] = $registro_ponto_model->listar_registro_ponto()->paginate(10);
-        $data['pager'] = $registro_ponto_model->pager;
+        $data['registro_ponto'] = $registro_ponto_model->listar_registro_ponto();
 
         $data['content'] = view('registro-ponto/consultar', $data);
 
@@ -113,5 +119,39 @@ class RegistroPontoController extends BaseController
         $data = $registro_ponto_model->consultar_registro_por_id($id);
 
         return json_encode($data);
+    }
+
+    public function filtro()
+    {
+        $filtro = array_filter([
+            'funcionario_nome' => $this->request->getGet('nome'),
+            'predio' => $this->request->getGet('predio'),
+            'data'   => $this->request->getGet('data')
+        ]);
+
+        $data['registro_ponto'] = $this->registroPontoModel->filtroRegistrosDePonto($filtro);
+
+        $data['content'] = view('registro-ponto/consultar', $data);
+
+        return view('layouts/template_padrao', $data);
+    }
+
+    public function delete($id)
+    {
+        try {
+            $data = [
+                'deleted_at' => date('Y-m-d H:i:s')
+            ];
+            if ($this->registroPontoModel->set($data)->where('id', $id)->update()) {
+                session()->setFlashdata('success', 'Registro deletado com sucesso!');
+                return redirect()->to(base_url('registro-ponto/consultar-registros'));
+            } else {
+                session()->setFlashdata('error', 'Erro ao deletar registro.');
+                return redirect()->to(base_url('registro-ponto/consultar-registros'));
+            }
+        } catch (\Throwable $th) {
+            session()->setFlashdata('error', 'Erro: ' . $th->getMessage());
+            return redirect()->to(base_url('registro-ponto/consultar-registros'));
+        }
     }
 }
