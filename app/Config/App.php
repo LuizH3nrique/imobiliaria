@@ -16,8 +16,8 @@ class App extends BaseConfig
      *
      *    http://example.com/
      */
-    public string $baseURL = 'http://localhost:8080/imobiliaria';
-    // public string $baseURL = 'https://imobi.dohncode.com.br';
+    // public string $baseURL = 'http://localhost:8080/imobiliaria';
+    public string $baseURL = 'https://imobi.dohncode.com.br';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
