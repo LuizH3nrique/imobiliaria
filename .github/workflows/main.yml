@@ -22,7 +22,7 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-          server: 154.56.48.224
+          server: srv1077.hstgr.io
           port: 21
           username: u139152663
           password: h86e-cLyBav4+f$
