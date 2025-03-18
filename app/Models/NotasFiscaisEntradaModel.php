@@ -49,7 +49,14 @@ class NotasFiscaisEntradaModel extends Model
 
     public function list()
     {
-        return $this->select('notas_fiscais_entrada.id, notas_fiscais_entrada.documento_fiscal_entrada, empresa.nome_empresarial as empresa_nome, cliente.nome_cliente, tipo_servico.descricao as servico_nome, payment_tipo.descricao as tipo_nome, valor, payment_status.descricao as status_nome')->join('empresa', 'empresa.id = notas_fiscais_entrada.empresa_id', 'left')->join('cliente', 'cliente.id = notas_fiscais_entrada.cliente_id', 'left')->join('tipo_servico', 'tipo_servico.id = notas_fiscais_entrada.tipo_servico', 'left')->join('payment_tipo', 'payment_tipo.id = notas_fiscais_entrada.tipo_pagamento', 'left')->join('payment_status', 'payment_status.id = notas_fiscais_entrada.payment_status', 'left')->findAll();
+        return $this->select('notas_fiscais_entrada.id, notas_fiscais_entrada.data_pagamento, notas_fiscais_entrada.documento_fiscal_entrada, empresa.nome_empresarial as empresa_nome, cliente.nome_cliente, tipo_servico.descricao as servico_nome, payment_tipo.descricao as tipo_nome, valor, payment_status.descricao as status_nome')
+            ->join('empresa', 'empresa.id = notas_fiscais_entrada.empresa_id', 'left')
+            ->join('cliente', 'cliente.id = notas_fiscais_entrada.cliente_id', 'left')
+            ->join('tipo_servico', 'tipo_servico.id = notas_fiscais_entrada.tipo_servico', 'left')
+            ->join('payment_tipo', 'payment_tipo.id = notas_fiscais_entrada.tipo_pagamento', 'left')
+            ->join('payment_status', 'payment_status.id = notas_fiscais_entrada.payment_status', 'left')
+            ->orderBy('notas_fiscais_entrada.id', 'DESC')
+            ->findAll();
     }
 
     public function sumEntrada()
@@ -83,5 +90,24 @@ class NotasFiscaisEntradaModel extends Model
             ->findAll();
     }
 
-    
+    public function getInfoEntradaPorMesAno($mes, $ano)
+    {
+        return $this->select('notas_fiscais_entrada.id, notas_fiscais_entrada.data_pagamento, notas_fiscais_entrada.documento_fiscal_entrada, empresa.nome_empresarial as empresa_nome, cliente.nome_cliente, tipo_servico.descricao as servico_nome, payment_tipo.descricao as tipo_nome, valor, payment_status.descricao as status_nome')
+            ->where('MONTH(data_pagamento)', $mes)
+            ->where('YEAR(data_pagamento)', $ano)
+            ->join('empresa', 'empresa.id = notas_fiscais_entrada.empresa_id', 'left')
+            ->join('cliente', 'cliente.id = notas_fiscais_entrada.cliente_id', 'left')
+            ->join('tipo_servico', 'tipo_servico.id = notas_fiscais_entrada.tipo_servico', 'left')
+            ->join('payment_tipo', 'payment_tipo.id = notas_fiscais_entrada.tipo_pagamento', 'left')
+            ->join('payment_status', 'payment_status.id = notas_fiscais_entrada.payment_status', 'left')
+            ->orderBy('notas_fiscais_entrada.id', 'DESC')
+            ->findAll();
+    }
+
+    public function getInfoEntradaSomaPorMesAno($mes, $ano){
+        return $this->selectSum('valor')
+        ->where('MONTH(data_pagamento)', $mes)
+        ->where('YEAR(data_pagamento)', $ano)
+        ->first();
+    }
 }

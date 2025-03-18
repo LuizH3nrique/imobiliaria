@@ -38,6 +38,40 @@
         justify-content: center;
         margin-top: 10px;
     }
+
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        gap: 10px;
+        /* Espaço entre os elementos */
+    }
+
+    .list-group-item span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .list-group-item span:first-child {
+        flex: 2;
+        /* Nome do prestador ocupa mais espaço */
+        max-width: 500px;
+        /* Define um tamanho máximo */
+    }
+
+    .list-group-item span:nth-child(2) {
+        flex: 1.5;
+        /* Serviço ocupa um espaço médio */
+        max-width: 300px;
+    }
+
+    .list-group-item strong {
+        flex: 1;
+        /* Valor ocupa menos espaço */
+        text-align: right;
+    }
 </style>
 
 <div class="container mt-4">
@@ -48,22 +82,20 @@
         <div class="card-body">
             <!-- Filtros -->
             <div class="row mb-4">
-                <div class="col-md-4">
-                    <select class="form-select">
-                        <option disabled selected>📁 Selecione a Empresa</option>
-                        <?php foreach ($empresa as $item) : ?>
-                            <option value="<?= $item['id'] ?>"><?= $item['nome_empresarial'] ?></option>
-                        <?php endforeach ?>
+                <div class="col-md-6">
+                    <select class="form-select" id="selectAno">
+                        <option disabled selected>📅 Selecione o Ano</option>
+                        <?php
+                        $anoAtual = date("Y");
+                        for ($ano = $anoAtual; $ano >= $anoAtual - 5; $ano--) {
+                            echo "<option value='$ano'>$ano</option>";
+                        }
+                        ?>
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <select class="form-select">
-                        <option selected>🏢 Selecione o Prédio</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <select class="form-select">
-                        <option selected>🚪 Selecione a Sala</option>
+                <div class="col-md-6">
+                    <select class="form-select" id="selectMes" disabled>
+                        <option disabled selected>📆 Selecione o Mês</option>
                     </select>
                 </div>
             </div>
@@ -78,18 +110,18 @@
                     <i class="fas fa-dollar-sign icon"></i>
                     <div>
                         <h5 class="card-title">Total Arrecadado (Mês)</h5>
-                        <p class="card-text display-6"><?= $valor_mes ?></p>
+                        <p id="valorMes" class="card-text display-6"><?= $valor_mes ?></p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card text-white bg-success p-3">
+            <div class="card text-white bg-danger p-3">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-chart-line icon"></i>
                     <div>
-                        <h5 class="card-title">Crescimento (%)</h5>
-                        <p class="card-text display-6"><?php // $crescimento ?></p>
+                        <h5 class="card-title">Total de Despesas (Mês)</h5>
+                        <p id="saidaMes" class="card-text display-6"><?= ($somaSaidas['valor'] === null) ? 0 : $somaSaidas['valor'] ?></p>
                     </div>
                 </div>
             </div>
@@ -119,8 +151,28 @@
                     </div>
                 </div>
 
-                <ul class="list-group" id="movimentacoes">
+                <ul class="list-group" id="entrada">
                     <!-- Itens serão preenchidos via JavaScript -->
+                    <?php foreach ($entradas as $item) : ?>
+                        <li class="list-group-item">
+                            <span class="text-uppercase"><?= $item['nome_cliente'] ?></span>
+                            <span class="text-uppercase"><?= $item['servico_nome'] ?></span>
+                            <span><?= date('d/m/Y', strtotime($item['data_pagamento'])) ?></span>
+                            <strong class="money"><?= $item['valor'] ?></strong>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+
+                <ul class="list-group" id="saida">
+                    <!-- Itens serão preenchidos via JavaScript -->
+                    <?php foreach ($saidas as $item) : ?>
+                        <li class="list-group-item">
+                            <span class="text-uppercase"><?= $item['prestador_nome'] ?></span>
+                            <span class="text-uppercase"><?= $item['servico_nome'] ?></span>
+                            <span><?= date('d/m/Y', strtotime($item['data_pagamento'])) ?></span>
+                            <strong class="money"><?= $item['valor'] ?></strong>
+                        </li>
+                    <?php endforeach ?>
                 </ul>
 
                 <!-- Paginação -->
@@ -137,47 +189,199 @@
 </div>
 
 <script>
-    let entradas = [
-        { descricao: "Venda A", valor: "R$ 1.500,00", data: "10/02/2024" },
-        { descricao: "Venda B", valor: "R$ 2.300,00", data: "11/02/2024" },
-        { descricao: "Venda C", valor: "R$ 1.100,00", data: "12/02/2024" },
-        { descricao: "Venda D", valor: "R$ 3.000,00", data: "13/02/2024" },
-        { descricao: "Venda E", valor: "R$ 4.500,00", data: "14/02/2024" },
-        { descricao: "Venda F", valor: "R$ 900,00", data: "15/02/2024" },
-        { descricao: "Venda G", valor: "R$ 2.750,00", data: "16/02/2024" }
-    ];
+    $(document).ready(function() {
+        $('.money').mask('000.000.000.000.000,00', {
+            reverse: true
+        });
 
-    let saidas = [
-        { descricao: "Conta Luz", valor: "R$ 750,00", data: "10/02/2024" },
-        { descricao: "Internet", valor: "R$ 230,00", data: "11/02/2024" },
-        { descricao: "Aluguel", valor: "R$ 3.100,00", data: "12/02/2024" },
-        { descricao: "Compra Mat.", valor: "R$ 1.200,00", data: "13/02/2024" },
-        { descricao: "Salários", valor: "R$ 5.500,00", data: "14/02/2024" },
-        { descricao: "Impostos", valor: "R$ 2.800,00", data: "15/02/2024" },
-        { descricao: "Manutenção", valor: "R$ 1.950,00", data: "16/02/2024" }
-    ];
+        // Adiciona "R$ " na frente de cada valor após a máscara ser aplicada
+        $('.money').each(function() {
+            let valor = $(this).text().trim();
+            if (valor !== '') {
+                $(this).text('R$ ' + valor);
+            }
+        });
+    });
 
-    let tipoAtual = "entradas";
-    let paginaAtual = 1;
+    document.addEventListener("DOMContentLoaded", function() {
+        const btnEntradas = document.getElementById("btnEntradas");
+        const btnSaidas = document.getElementById("btnSaidas");
+        const entradaList = document.getElementById("entrada");
+        const saidaList = document.getElementById("saida");
 
-    function atualizarLista() {
-        let lista = tipoAtual === "entradas" ? entradas : saidas;
-        let start = (paginaAtual - 1) * 7;
-        let end = start + 7;
-        let itens = lista.slice(start, end);
+        let currentPage = 1;
+        const itemsPerPage = 5;
 
-        document.getElementById("movimentacoes").innerHTML = itens.map(item =>
-            `<li class="list-group-item">
-                <span>${item.descricao} - ${item.data}</span>
-                <strong>${item.valor}</strong>
-            </li>`
-        ).join("");
+        // Função para exibir a lista correta
+        function showList(list) {
+            entradaList.style.display = list === entradaList ? "block" : "none";
+            saidaList.style.display = list === saidaList ? "block" : "none";
+            btnEntradas.classList.toggle("active", list === entradaList);
+            btnSaidas.classList.toggle("active", list === saidaList);
+            paginate(list);
+        }
 
-        document.getElementById("currentPage").innerText = paginaAtual;
-    }
+        // Alternar entre Entradas e Saídas
+        btnEntradas.addEventListener("click", function() {
+            showList(entradaList);
+        });
 
-    document.getElementById("btnEntradas").addEventListener("click", () => { tipoAtual = "entradas"; paginaAtual = 1; atualizarLista(); });
-    document.getElementById("btnSaidas").addEventListener("click", () => { tipoAtual = "saidas"; paginaAtual = 1; atualizarLista(); });
+        btnSaidas.addEventListener("click", function() {
+            showList(saidaList);
+        });
 
-    atualizarLista();
+        // Paginação
+        function paginate(list) {
+            const items = list.querySelectorAll(".list-group-item");
+            const totalPages = Math.ceil(items.length / itemsPerPage);
+            currentPage = Math.min(currentPage, totalPages) || 1; // Ajusta caso a página atual seja maior que o total
+
+            function showPage(page) {
+                items.forEach((item, index) => {
+                    item.style.display = (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) ? "flex" : "none";
+                });
+
+                document.getElementById("currentPage").textContent = `${page} / ${totalPages || 1}`;
+                document.getElementById("prevPage").disabled = page === 1;
+                document.getElementById("nextPage").disabled = page >= totalPages;
+            }
+
+            document.getElementById("prevPage").onclick = function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                }
+            };
+
+            document.getElementById("nextPage").onclick = function() {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    showPage(currentPage);
+                }
+            };
+
+            showPage(currentPage);
+        }
+
+        // Inicializar exibição
+        showList(entradaList);
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const selectAno = document.getElementById("selectAno");
+        const selectMes = document.getElementById("selectMes");
+        const valorMes = document.getElementById("valorMes");
+        const valorEntradas = document.getElementById("valorEntradas");
+        const valorSaidas = document.getElementById("valorSaidas");
+
+        selectAno.addEventListener("change", function() {
+            const anoSelecionado = parseInt(this.value);
+            const mesAtual = new Date().getMonth() + 1;
+            selectMes.innerHTML = '<option disabled selected>📆 Selecione o Mês</option>';
+
+            for (let mes = 1; mes <= (anoSelecionado === new Date().getFullYear() ? mesAtual : 12); mes++) {
+                const nomeMes = new Date(0, mes - 1).toLocaleString('pt-BR', {
+                    month: 'long'
+                });
+                selectMes.innerHTML += `<option value="${mes}">${nomeMes}</option>`;
+            }
+            selectMes.disabled = false;
+        });
+    });
+
+    $(document).ready(function() {
+        // Aplica a máscara em todos os valores com a classe 'money' na carga inicial
+        $('.money').mask('000.000.000.000.000,00', {
+            reverse: true
+        });
+
+        // Adiciona o "R$" após a máscara
+        $('.money').each(function() {
+            let valor = $(this).text().trim();
+            if (valor !== '') {
+                $(this).text('R$ ' + valor);
+            }
+        });
+    });
+
+    selectMes.addEventListener("change", function() {
+        const selectAno = document.getElementById("selectAno");
+        const selectMes = document.getElementById("selectMes");
+
+        const somaEntradaMes = document.getElementById("valorMes");
+        const somaSaidaMes = document.getElementById("saidaMes");
+
+        const entradaList = document.getElementById("entrada"); // Lista de entradas
+        const saidaList = document.getElementById("saida"); // Lista de saídas
+
+        const mesSelecionado = this.value;
+        const anoSelecionado = selectAno.value;
+
+        showSpinner("Buscando as informações");
+
+        $.ajax({
+            url: '<?= base_url('dashboard/get-info-mes') ?>',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                mesSelecionado,
+                anoSelecionado
+            },
+            success: function(response) {
+                console.log(response);
+
+                // Atualizando os valores na tela
+                somaEntradaMes.textContent = "R$ " + response.somaEntradas['valor'];
+                somaSaidaMes.textContent = "R$ " + response.somaSaidas['valor'];
+
+                // Limpa os itens das listas de entradas e saídas
+                entradaList.innerHTML = '';
+                saidaList.innerHTML = '';
+
+                // Preencher as entradas
+                response.entradas.forEach(function(entrada) {
+                    const li = document.createElement("li");
+                    li.classList.add("list-group-item");
+                    li.innerHTML = `
+                <span class="text-uppercase">${entrada.nome_cliente}</span>
+                <span class="text-uppercase">${entrada.servico_nome}</span>
+                <span>${entrada.data_pagamento}</span>
+                <strong class="money">${entrada.valor}</strong>
+            `;
+                    entradaList.appendChild(li);
+                });
+
+                // Preencher as saídas
+                response.saidas.forEach(function(saida) {
+                    const li = document.createElement("li");
+                    li.classList.add("list-group-item");
+                    li.innerHTML = `
+                <span class="text-uppercase">${saida.prestador_nome}</span>
+                <span class="text-uppercase">${saida.servico_nome}</span>
+                <span>${saida.data_pagamento}</span>
+                <strong class="money">${saida.valor}</strong>
+            `;
+                    saidaList.appendChild(li);
+                });
+
+                // Reaplicar a máscara de moeda para os novos valores
+                $('.money').mask('000.000.000.000.000,00', {
+                    reverse: true
+                });
+
+                // Adiciona "R$" na frente de cada valor após a máscara ser aplicada
+                $('.money').each(function() {
+                    let valor = $(this).text().trim();
+                    if (valor !== '') {
+                        $(this).text('R$ ' + valor);
+                    }
+                });
+
+                hideSpinner();
+            },
+            error: function(status, error) {
+                console.log(error);
+            }
+        });
+    });
 </script>

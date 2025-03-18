@@ -50,7 +50,14 @@ class NotasFiscaisSaidaModel extends Model
 
     public function list()
     {
-        return $this->select('notas_fiscais_saida.id, notas_fiscais_saida.documento_fiscal_saida,empresa.nome_empresarial, prestador.nome as prestador_nome, tipo_servico.descricao as servico_nome, payment_tipo.descricao as tipo_nome, valor, payment_status.descricao as status_nome')->join('empresa', 'empresa.id = tomador_id')->join('prestador', 'prestador.id = prestador_id')->join('tipo_servico', 'tipo_servico.id = servico_id')->join('payment_tipo', 'payment_tipo.id = tipo_pagamento')->join('payment_status', 'payment_status.id = payment_status')->findAll();
+        return $this->select('notas_fiscais_saida.id, notas_fiscais_saida.data_pagamento, notas_fiscais_saida.documento_fiscal_saida,empresa.nome_empresarial, prestador.nome as prestador_nome, tipo_servico.descricao as servico_nome, payment_tipo.descricao as tipo_nome, valor, payment_status.descricao as status_nome')
+            ->join('empresa', 'empresa.id = tomador_id')
+            ->join('prestador', 'prestador.id = prestador_id')
+            ->join('tipo_servico', 'tipo_servico.id = servico_id')
+            ->join('payment_tipo', 'payment_tipo.id = tipo_pagamento')
+            ->join('payment_status', 'payment_status.id = payment_status')
+            ->orderBy('notas_fiscais_saida.id', 'DESC')
+            ->findAll();
     }
 
     public function listPorId($id)
@@ -180,5 +187,26 @@ class NotasFiscaisSaidaModel extends Model
             ->where('MONTH(data_pagamento)', $mesAnterior)
             ->where('YEAR(data_pagamento)', $anoAnterior)
             ->findAll();
+    }
+
+    public function getInfoSaidaPorMesAno($mes, $ano)
+    {
+        return $this->select('notas_fiscais_saida.id, notas_fiscais_saida.data_pagamento, notas_fiscais_saida.documento_fiscal_saida,empresa.nome_empresarial, prestador.nome as prestador_nome, tipo_servico.descricao as servico_nome, payment_tipo.descricao as tipo_nome, valor, payment_status.descricao as status_nome')
+            ->where('MONTH(data_pagamento)', $mes)
+            ->where('YEAR(data_pagamento)', $ano)
+            ->join('empresa', 'empresa.id = tomador_id')
+            ->join('prestador', 'prestador.id = prestador_id')
+            ->join('tipo_servico', 'tipo_servico.id = servico_id')
+            ->join('payment_tipo', 'payment_tipo.id = tipo_pagamento')
+            ->join('payment_status', 'payment_status.id = payment_status')
+            ->orderBy('notas_fiscais_saida.id', 'DESC')
+            ->findAll();
+    }
+
+    public function getInfoSaidaSomaPorMesAno($mes, $ano){
+        return $this->selectSum('valor')
+        ->where('MONTH(data_pagamento)', $mes)
+        ->where('YEAR(data_pagamento)', $ano)
+        ->first();
     }
 }

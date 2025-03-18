@@ -10,6 +10,15 @@ use App\Models\PredioModel;
 
 class DashboardController extends BaseController
 {
+    protected $notasFiscaisEntradaModel;
+    protected $notasFiscaisSaidaModel;
+
+    public function __construct()
+    {
+        $this->notasFiscaisEntradaModel = new NotasFiscaisEntradaModel();
+        $this->notasFiscaisSaidaModel = new NotasFiscaisSaidaModel();
+    }
+
     public function dadosPorMesSaida()
     {
         $mes = $this->request->getGet('mes');
@@ -128,5 +137,19 @@ class DashboardController extends BaseController
             return 0; // Se ambos forem zero, não há variação
         }
         return (($totalMesAtual - $totalMesAnterior) / $totalMesAnterior) * 100;
+    }
+
+    public function infoPorMes()
+    {
+        $mes = $this->request->getGet('mesSelecionado');
+        $ano = $this->request->getGet('anoSelecionado');
+
+        $data['saidas'] = $this->notasFiscaisSaidaModel->getInfoSaidaPorMesAno($mes, $ano);
+        $data['somaSaidas'] = $this->notasFiscaisSaidaModel->getInfoSaidaSomaPorMesAno($mes, $ano);
+        
+        $data['entradas'] = $this->notasFiscaisEntradaModel->getInfoEntradaPorMesAno($mes, $ano);
+        $data['somaEntradas'] = $this->notasFiscaisEntradaModel->getInfoEntradaSomaPorMesAno($mes, $ano);
+
+        return json_encode($data);
     }
 }

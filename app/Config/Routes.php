@@ -11,12 +11,12 @@ $routes->get('/', 'LoginController::index', ['filter' => 'session']);
 $routes->get('/teste', 'Teste::index', ['filter' => 'session']);
 
 // ajax dashboard
-$routes->get('/dashboard/dados-por-mes/entrada', 'DashboardController::dadosPorMesEntrada', ['filter' => 'session']);
-$routes->get('/dashboard/dados-por-mes/saida', 'DashboardController::dadosPorMesSaida', ['filter' => 'session']);
-$routes->get('/dashboard/dados-por-mes/saida/por-predio', 'DashboardController::dadosPorMesSaidaPorPredio', ['filter' => 'session']);
-$routes->get('/dashboard/dados-por-mes/saida/por-predio/view', 'DashboardController::viewDadosPorMesSaidaPorPredio', ['filter' => 'session']);
-$routes->get('/predio/listar-predio-por-empresa', 'PredioController::listarPredioPorEmpresa');
-
+$routes->get('dashboard/dados-por-mes/entrada', 'DashboardController::dadosPorMesEntrada', ['filter' => 'session']);
+$routes->get('dashboard/dados-por-mes/saida', 'DashboardController::dadosPorMesSaida', ['filter' => 'session']);
+$routes->get('dashboard/dados-por-mes/saida/por-predio', 'DashboardController::dadosPorMesSaidaPorPredio', ['filter' => 'session']);
+$routes->get('dashboard/dados-por-mes/saida/por-predio/view', 'DashboardController::viewDadosPorMesSaidaPorPredio', ['filter' => 'session']);
+$routes->get('predio/listar-predio-por-empresa', 'PredioController::listarPredioPorEmpresa');
+$routes->get('dashboard/get-info-mes', 'DashboardController::infoPorMes');
 
 // users
 //$routes->get('/settings', 'SettingController::index', ['filter' => 'session']);

@@ -11,12 +11,17 @@ use App\Models\UsuarioModel;
 
 class LoginController extends BaseController
 {
+    protected $notasFiscaisEntradaModel;
+    protected $notasFiscaisSaidaModel;
+
+    public function __construct()
+    {
+        $this->notasFiscaisEntradaModel = new NotasFiscaisEntradaModel();
+        $this->notasFiscaisSaidaModel = new NotasFiscaisSaidaModel();
+    }
+
     public function index()
     {
-        // repaginada na tela principal
-        $empresaModel = new EmpresaModel();
-        $data['empresa'] = $empresaModel->populaEmpresaSelect();
-
         // Valor dos contratos no mes
         $contrato_model = new ContratoModel();
         $valor = $contrato_model->soma_dos_contratos();
@@ -24,6 +29,8 @@ class LoginController extends BaseController
         $data['valor_mes'] = $valor_formatado;
 
         $data['valor_ano'] = 'R$ ' . number_format(floatval(str_replace(',', '.', $valor['valor_arrecadado'] * 12)), 2, ',', '.');
+
+        $data['somaSaidas'] = $this->notasFiscaisSaidaModel->getInfoSaidaSomaPorMesAno(date('m'), date('Y'));
 
         // repaginada na tela principal
         $notaFiscalSaida = new NotasFiscaisSaidaModel();
@@ -39,6 +46,10 @@ class LoginController extends BaseController
         $data['meses_gastos'] = $notaFiscalSaida->mesAnoGastos();
 
         $data['meses_entradas'] = $notaFiscalEntrada->mesAnoGastos();
+
+        $data['entradas'] = $this->notasFiscaisEntradaModel->list();
+
+        $data['saidas'] = $this->notasFiscaisSaidaModel->list();
 
         $data['title'] = 'Página Inicial';
         $data['content'] = view('login/login', $data);  //view('sua_view', NULL, TRUE); // Carrega o conteúdo da sua view
